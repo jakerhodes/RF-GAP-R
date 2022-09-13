@@ -19,13 +19,13 @@ seeds = c(420, 327, 303, 117, 1012)
 
 node_df <- data.frame(matrix(nrow = 0, ncol = 7))
 
-colnames(node_df) <- c('dataset', 'seed', 'node_size', 'pct_match', 'rf_error', 'rfgap_error', 'error_difference')
+colnames(node_df) <- c('dataset', 'seed', 'node_size', 'pct_no_match', 'rf_error', 'rfgap_error', 'error_difference')
 
 for (filename in filenames) {
 
   dataset_df <- data.frame(matrix(nrow = 0, ncol = 7))
 
-  colnames(dataset_df) <- c('dataset', 'seed', 'node_size', 'pct_match', 'rf_error', 'rfgap_error', 'error_difference')
+  colnames(dataset_df) <- c('dataset', 'seed', 'node_size', 'pct_no_match', 'rf_error', 'rfgap_error', 'error_difference')
 
   print(filename)
 
@@ -102,11 +102,22 @@ for (filename in filenames) {
       rfgap_predictions <- rfgap_classification$predictions
       rfgap_error <- rfgap_classification$error
 
-      pct_match <- sum(rfgap_predictions == rf_predictions) / n
+
+      if (prediction_type == 'regression') {
+
+        pct_no_match <- sum(abs(rfgap_predictions - rf_predictions)) / n
+
+      } else {
+
+        pct_no_match <- 1 - sum(rfgap_predictions == rf_predictions) / n
+
+      }
+
+
       error_difference <- rf_error - rfgap_error
 
 
-      dataset_df[counter, ] <- c(filename, seed, node.size, pct_match, rf_error, rfgap_error, error_difference)
+      dataset_df[counter, ] <- c(filename, seed, node.size, pct_no_match, rf_error, rfgap_error, error_difference)
       counter <- counter + 1
 
       # TODO: distinguish between regression and classification datasets
@@ -117,5 +128,7 @@ for (filename in filenames) {
   node_df <- rbind(node_df, dataset_df)
 }
 
-node_df
+write.table(node_df, 'experiments/min_node_size/node_size_results.csv',
+            sep = ',',
+            row.names = FALSE)
 
