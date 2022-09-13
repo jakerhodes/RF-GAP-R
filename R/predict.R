@@ -94,7 +94,7 @@ predict.rf_proximities <- function(object, y, y_test = NULL, ...) {
     # TODO: Make adjustments for test set for regression
 
     train_predictions <- prox_scaled[1:n_train, 1:n_train] %*% y
-    train_error       <- sum((train_predictions - y_train)^2) / n_train
+    train_error       <- sum((train_predictions - y)^2) / n_train
 
 
     if (!is.null(y_test)) {

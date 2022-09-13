@@ -7,7 +7,7 @@ filenames <- c('auto-mpg', 'arrhythmia', 'balance_scale', 'banknote', 'breast_ca
                'parkinsons', 'rnaSeq', 'seeds', 'sonar',
                'tic-tac-toe', 'titanic', 'wine')
 
-filenames <- c('iris', 'sonar')
+# filenames <- c('iris', 'sonar')
 
 
 proximity_path <- 'experiments/min_node_size/proximities/'
@@ -108,6 +108,8 @@ for (filename in filenames) {
 
       dataset_df[counter, ] <- c(filename, seed, node.size, pct_match, rf_error, rfgap_error, error_difference)
       counter <- counter + 1
+
+      # TODO: distinguish between regression and classification datasets
 
     }
   }
