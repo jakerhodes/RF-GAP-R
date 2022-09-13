@@ -2,6 +2,7 @@
 
 library(data.table)
 library(missMethods)
+library(rfgap)
 
 imputation_path <- 'experiments/imputation/'
 
