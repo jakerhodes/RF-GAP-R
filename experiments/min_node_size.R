@@ -1,6 +1,5 @@
 
 
-
 filenames <- c('auto-mpg', 'arrhythmia', 'balance_scale', 'banknote', 'breast_cancer',
                'car', 'diabetes', 'ecoli', 'glass', 'heart_disease',
                'hill_valley', 'ionosphere', 'iris', 'liver', 'lymphography',
@@ -17,7 +16,7 @@ seeds = c(420, 327, 303, 117, 1012)
 
 
 
-node_df <- data.frame(matrix(nrow = 0, ncol = 7))
+node_df <- data.frame(matrix(data = 0, nrow = 0, ncol = 7))
 
 colnames(node_df) <- c('dataset', 'seed', 'node_size', 'pct_no_match', 'rf_error', 'rfgap_error', 'error_difference')
 
@@ -128,7 +127,17 @@ for (filename in filenames) {
   node_df <- rbind(node_df, dataset_df)
 }
 
+
+
+
+node_df$node_size <- as.numeric(node_df$node_size)
+node_df$pct_no_match <- as.numeric(node_df$pct_no_match)
+node_df$rf_error <- as.numeric(node_df$rf_error)
+node_df$rfgap_error <- as.numeric(node_df$rfgap_error)
+node_df$error_difference <- as.numeric(node_df$error_difference)
+
 write.table(node_df, 'experiments/min_node_size/node_size_results.csv',
             sep = ',',
             row.names = FALSE)
+
 
