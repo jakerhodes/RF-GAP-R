@@ -11,18 +11,18 @@ proximity_path <- 'experiments/min_node_size/proximities/'
 
 node.sizes <- c(1, 5, 10, 20, 50)
 seeds = c(420, 327, 303, 117, 1012)
-proximity_types <- c('rfgap', 'original', 'oob', 'rfproxih')
+proximity_types <- c('rfgap', 'original', 'oob')
 
 
-node_df <- data.frame(matrix(data = 0, nrow = 0, ncol = 8))
+node_df <- data.frame(matrix(data = 0, nrow = 0, ncol = 7))
 
-colnames(node_df) <- c('dataset', 'seed', 'node_size', 'pct_no_match', 'rf_error', 'prox_error', 'error_difference', 'proximity_type')
+colnames(node_df) <- c('dataset', 'seed', 'node_size', 'pct_no_match', 'rf_error', 'prox_error', 'error_difference')
 
 for (filename in filenames) {
 
-  dataset_df <- data.frame(matrix(nrow = 0, ncol = 8))
+  dataset_df <- data.frame(matrix(nrow = 0, ncol = 7))
 
-  colnames(dataset_df) <- c('dataset', 'seed', 'node_size', 'pct_no_match', 'rf_error', 'prox_error', 'error_difference', 'proximity_type')
+  colnames(dataset_df) <- c('dataset', 'seed', 'node_size', 'pct_no_match', 'rf_error', 'prox_error', 'error_difference')
 
   print(filename)
 
@@ -67,10 +67,11 @@ for (filename in filenames) {
 
         if (file.exists(proximity_file)) {
 
+          prox <- as.rf_proximities(as.matrix(fread(proximity_file)))
+
           rf <- ranger(x = x, y = y, write.forest = TRUE, keep.inbag = TRUE,
                        seed = seed, min.node.size = node.size)
 
-          prox <- as.rf_proximities(as.matrix(fread(proximity_file)))
 
         } else {
 
@@ -80,6 +81,7 @@ for (filename in filenames) {
 
             rf <- ranger(x = x, y = y, write.forest = TRUE, keep.inbag = TRUE,
                          seed = seed, min.node.size = node.size)
+
 
             get_proximities(x = x, y = y, rf = rf, type = proximity_type)
 
@@ -126,7 +128,7 @@ for (filename in filenames) {
         error_difference <- rf_error - prox_error
 
 
-        dataset_df[counter, ] <- c(filename, seed, node.size, pct_no_match, rf_error, prox_error, error_difference, proximity_type)
+        dataset_df[counter, ] <- c(filename, seed, node.size, pct_no_match, rf_error, prox_error, error_difference)
         counter <- counter + 1
 
         # TODO: distinguish between regression and classification datasets
@@ -142,9 +144,9 @@ for (filename in filenames) {
   node_df$prox_error <- as.numeric(node_df$prox_error)
   node_df$error_difference <- as.numeric(node_df$error_difference)
 
-  write.table(node_df, 'experiments/min_node_size/node_size_results.csv',
-              sep = ',',
-              row.names = FALSE)
+  # write.table(node_df, 'experiments/min_node_size/node_size_results.csv',
+  #             sep = ',',
+  #             row.names = FALSE)
 
 }
 

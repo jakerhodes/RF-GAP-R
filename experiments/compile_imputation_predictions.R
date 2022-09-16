@@ -8,11 +8,11 @@ library(RColorBrewer)
 imputation_path <- 'experiments/imputation/'
 fig_path <- 'experiments/imputation/figs/'
 
-# proximity_types <- c('rfgap', 'original', 'oob')
-# proximity_names <- c('RF-GAP', 'Original', 'OOB')
+proximity_types <- c('rfgap', 'original', 'oob')
+proximity_names <- c('RF-GAP', 'Original', 'OOB')
 
-proximity_types <- c('rfgap', 'original', 'oob', 'rfproxih')
-proximity_names <- c('RF-GAP', 'Original', 'OOB', 'RFProxIH')
+# proximity_types <- c('rfgap', 'original', 'oob', 'rfproxih')
+# proximity_names <- c('RF-GAP', 'Original', 'OOB', 'RFProxIH')
 
 
 seeds <- c(420, 327, 303, 117, 1012)
@@ -25,6 +25,7 @@ filenames <- c('auto-mpg', 'arrhythmia', 'balance_scale', 'banknote', 'breast_ca
                'tic-tac-toe', 'titanic', 'wine', 'rnaSeq', 'optdigits', 'waveform')
 
 
+# filenames <- c('optdigits', 'waveform')
 # filenames <- c('iris')
 
 col_names <- c('pct', paste0(proximity_types, '_score'), paste0(proximity_types, '_oob'))
@@ -140,6 +141,36 @@ for (filename in filenames) {
   g
 
   ggsave(paste0(fig_path, filename, '.pdf'), g, device = NULL, width = 16, height = 4)
+
+
+
+  h <- ggplot(data = norms_data, aes(x = iteration, y = mean, color = name,
+                                     shape = name)) +
+    geom_point() +
+    geom_pointrange(aes(ymin = mean - sd / sqrt(5),
+                        ymax = mean + sd / sqrt(5))) +
+    scale_color_manual(values = colors) +
+    scale_fill_manual(values = colors) +
+    scale_shape_manual(values = shapes) +
+    xlab('Iteration') +
+    ylab(paste(str_to_title(filename), '-', 'Mean Norm')) +
+    labs(color = 'Type', shape = 'Type') +
+    facet_wrap(~ pct, ncol =
+                 length(pcts), labeller = labeller(pct = pct_labs),
+               scales = 'free') +
+    theme(legend.position = c(.05, .75),
+          axis.text.x = element_text(size = 15),
+          axis.text.y = element_text(size = 15),
+          strip.text.x = element_text(size = 17),
+          axis.title.y = element_text(size = 17),
+          axis.title.x = element_text(size = 17),
+          legend.text = element_text(size = 15),
+          legend.title = element_text(size = 16))
+
+
+  h
+
+  ggsave(paste0(fig_path, filename, '_independent_scale.pdf'), h, device = NULL, width = 16, height = 4)
 
 
 }

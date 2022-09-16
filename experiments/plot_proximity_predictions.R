@@ -20,7 +20,6 @@ differences[Proximity == 'rfproxih_diff', Proximity := 'RFProxIH']
 
 
 
-
 # TODO: Add this order to the imputations
 proximity_names <- c('RF', 'RF-GAP', 'Original', 'OOB', 'PBK', 'RFProxIH')
 proximity_order <- c('RF-GAP', 'Original', 'OOB', 'PBK', 'RFProxIH', 'RF')

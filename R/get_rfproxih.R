@@ -28,7 +28,7 @@ get_rfproxih <- function(rf, x, y, nk = 10, x_test = NULL, y_test = NULL) {
     is.factor(x)
   })
 
-  if (length(factor_cols) > 0) {
+  if (sum(factor_cols) > 0) {
     stop('RFProxIH only works with numeric data')
   }
 

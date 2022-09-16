@@ -20,19 +20,13 @@ pcts  <- c(0.05, 0.10, 0.25, 0.50, 0.75)
 # seeds <- c(372)
 # pcts  <- c(0.75)
 
-filenames <- c('auto-mpg', 'arrhythmia', 'balance_scale', 'banknote', 'breast_cancer',
-               'car', 'diabetes', 'ecoli', 'glass', 'heart_disease',
-               'hill_valley', 'ionosphere', 'iris', 'liver', 'lymphography',
-               'parkinsons', 'rnaSeq', 'seeds', 'sonar',
-               'tic-tac-toe', 'titanic', 'wine', 'optdigits', 'waveform')
 
 filenames <- c('auto-mpg', 'arrhythmia', 'balance_scale', 'banknote', 'breast_cancer',
                'car', 'diabetes', 'ecoli', 'glass', 'heart_disease',
                'hill_valley', 'ionosphere', 'iris', 'liver', 'lymphography',
-               'parkinsons', 'seeds', 'sonar',
-               'tic-tac-toe', 'titanic', 'wine', 'optdigits', 'waveform')
+               'parkinsons', 'seeds', 'sonar', 'tic-tac-toe', 'titanic', 'wine',
+               'optdigits', 'waveform', 'rnaSeq')
 
-# filenames <- c('breast_cancer')
 
 for (filename in filenames) {
 
@@ -128,6 +122,9 @@ for (filename in filenames) {
 
     } #pcts
 
-    saveRDS(results, file = paste0(imputation_path, filename, '_', proximity_type, '.rds'))
+    if (length(results) > 0) {
+      saveRDS(results, file = paste0(imputation_path, filename, '_', proximity_type, '.rds'))
+    }
+
   } # proximity_types
 } # filenames

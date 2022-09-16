@@ -20,8 +20,7 @@ get_original_proximities <- function(rf, x, x_test = NULL) {
       matches <- leaf_matrix[, t] == index
       prox[ind, matches] <- prox[ind, matches] + 1
     }
-
-    prox[ind, matches] <- prox[ind, matches] / num_trees
   }
+  prox <- prox / num_trees
   return(prox)
 }

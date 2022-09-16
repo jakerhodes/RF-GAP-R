@@ -16,11 +16,11 @@ seeds = c(420, 327, 303, 117, 1012)
 filenames <- c('auto-mpg', 'arrhythmia', 'balance_scale', 'banknote', 'breast_cancer',
                'car', 'diabetes', 'ecoli', 'glass', 'heart_disease',
                'hill_valley', 'ionosphere', 'iris', 'liver', 'lymphography',
-               'parkinsons', 'rnaSeq', 'seeds', 'sonar',
-               'tic-tac-toe', 'titanic', 'wine', 'optdigits', 'waveform')
+               'parkinsons', 'seeds', 'sonar',
+               'tic-tac-toe', 'titanic', 'wine', 'rnaSeq', 'optdigits', 'waveform')
 
 
-filenames <- c('auto-mpg')
+# filenames <- c('auto-mpg')
 
 combined_df <- data.frame(matrix(nrow = 0,
                                  ncol = 2 * length(proximity_types) + 4))
@@ -39,6 +39,8 @@ for (filename in filenames) {
 
   counter <- 1
   for (seed in seeds) {
+
+    print(paste0('    ', seed))
     set.seed(seed)
 
     data <- read.table(paste0('datasets/', filename, '.csv'),
@@ -75,6 +77,8 @@ for (filename in filenames) {
 
 
     for (proximity_type in proximity_types) {
+
+      print(paste0('        ', proximity_type))
 
       if (file.exists(paste0(proximity_path,
                              filename, '_',
@@ -197,6 +201,6 @@ stats_wide <- dcast(stats_long, Dataset + Proximity ~ ...)
 errors <- stats_wide[Proximity %in% c('RF', proximity_names)]
 differences <- stats_wide[Proximity %in% c('RF', proximity_diffs)]
 #
-# data.table::fwrite(errors, paste0(proximity_path, 'aggregated_errors.csv'), na = 'NA')
-# data.table::fwrite(differences, paste0(proximity_path, 'aggregated_differences.csv'), na = 'NA')
+data.table::fwrite(errors, paste0(proximity_path, 'aggregated_errors.csv'), na = 'NA')
+data.table::fwrite(differences, paste0(proximity_path, 'aggregated_differences.csv'), na = 'NA')
 
