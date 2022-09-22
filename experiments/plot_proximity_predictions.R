@@ -3,6 +3,10 @@ library(data.table)
 library(RColorBrewer)
 library(ggpubr)
 
+library(stringr)
+library(dplyr)
+library(tidyverse)
+
 fig_path <- 'I:/My Drive/github/RF-GAP/experiments/figs/'
 proximity_path <- 'experiments/proximities_split/'
 
@@ -20,13 +24,29 @@ differences[Proximity == 'rfproxih_diff', Proximity := 'RFProxIH']
 
 
 
+
 # TODO: Add this order to the imputations
 proximity_names <- c('RF', 'RF-GAP', 'Original', 'OOB', 'PBK', 'RFProxIH')
 proximity_order <- c('RF-GAP', 'Original', 'OOB', 'PBK', 'RFProxIH', 'RF')
 
 
 errors <- errors[order(match(Proximity, proximity_order))]
+
+errors[, as.list(coef(lm(test_mean ~ oob_mean))), by = Proximity]
 differences <- differences[order(match(Proximity, proximity_order))]
+
+
+differences <- as.data.frame(differences)
+errors     <- as.data.frame(errors)
+
+
+differences$Dataset <- sub("_", " ", differences$Dataset)
+differences[, 'Dataset'] <- str_to_title(differences[, 'Dataset'])
+
+errors$Dataset <- sub("_", " ", errors$Dataset)
+errors[, 'Dataset'] <- str_to_title(errors[, 'Dataset'])
+
+
 
 palette <- brewer.pal(6, 'Dark2')
 display.brewer.pal(6, 'Dark2')
@@ -34,7 +54,7 @@ display.brewer.pal(6, 'Dark2')
 colors <- palette[c(1, 5, 2, 3, 6, 4)]
 shapes <- c(17, 22, 24, 23, 21, 25)
 
-g <- ggplot(data <- as.data.frame(errors),
+g <- ggplot(data = errors,
             aes(x = oob_mean,
                 y = test_mean)) +
 
@@ -69,14 +89,14 @@ g <- ggplot(data <- as.data.frame(errors),
 
 g
 
-ggsave(paste0(fig_path, 'error_scatter.pdf'), plot = g, device = NULL, width = 6, height = 6)
+# ggsave(paste0(fig_path, 'error_scatter.pdf'), plot = g, device = NULL, width = 6, height = 6)
 
 # Regression slopes
-errors[, as.list(coef(lm(test_mean ~ oob_mean))), by = Proximity]
 
 
 
-b <- ggplot(data <- as.data.frame(differences[Proximity != 'RF']),
+
+b <- ggplot(data = differences[differences$Proximity != 'RF', ],
             aes(y = reorder(Proximity, match(Proximity, rev(proximity_order[1:5]))),
                 x = oob_mean)) +
   geom_boxplot(aes(fill = Proximity)) +
@@ -100,7 +120,7 @@ b <- ggplot(data <- as.data.frame(differences[Proximity != 'RF']),
 b
 
 
-t <- ggplot(data <- as.data.frame(differences[Proximity != 'RF']),
+t <- ggplot(data = differences[differences$Proximity != 'RF', ],
             aes(y = reorder(Proximity, match(Proximity, rev(proximity_order[1:5]))),
                 x = test_mean)) +
   geom_boxplot(aes(fill = Proximity)) +
@@ -128,4 +148,60 @@ t
 boxplots <- ggarrange(b, t, ncol = 1, nrow = 2)
 boxplots
 
-ggsave(paste0(fig_path, 'error_boxplots.pdf'), plot = boxplots, device = NULL, width = 7, height = 12)
+# ggsave(paste0(fig_path, 'error_boxplots.pdf'), plot = boxplots, device = NULL, width = 7, height = 12)
+
+table_data <- rbind(differences[differences$Proximity != 'RF', ],
+                    errors[errors$Proximity == 'RF', ])
+
+colnames(table_data) <- c('Dataset', 'Proximity', 'Train', 'Train_SD', 'Test', 'Test_SD')
+
+
+#------------------------------------------------------------------------------#
+#                          Training Table
+#------------------------------------------------------------------------------#
+
+table_train <- as.data.table(table_data[, -which(names(table_data) %in% c('Test', 'Test_SD'))])
+table_train[, Train_SD := .(sprintf("(%.2f)", Train_SD))]
+
+
+table_train_wide <- dcast(table_train, Dataset ~ Proximity,
+                          value.var = c('Train', 'Train_SD'))
+
+table_train_wide <- table_train_wide[, c(1, 5, 11, 6, 12, 3, 9, 2, 8, 4, 10, 7, 13)]
+colnames(table_train_wide) <- c('Dataset', 'RF', '', 'RF-GAP', '', 'Original', '', 'OOB', '',
+                                'PBK', '', 'RFProxIH', '')
+
+
+hline <- c(-1, 0, nrow(table_train_wide), seq(1, 23, 1))
+print(xtable(table_train_wide, align = c('|l|', '|c|', 'c', 'c|', 'c',  'c|', 'c', 'c|',
+                                'c', 'c|', 'c', 'c|', 'c', 'r|'),
+             caption = '',
+             digits = c(0, 0, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2)),
+      include.rownames = FALSE,
+      hline.after = hline,
+      label = 'tab:training_diff')
+
+#------------------------------------------------------------------------------#
+#                          Test Table
+#------------------------------------------------------------------------------#
+
+table_test <- as.data.table(table_data[, -which(names(table_data) %in% c('Train', 'Train_SD'))])
+table_test[, Test_SD := .(sprintf("(%.2f)", Test_SD))]
+
+
+table_test_wide <- dcast(table_test, Dataset ~ Proximity,
+                          value.var = c('Test', 'Test_SD'))
+
+table_test_wide <- table_test_wide[, c(1, 5, 11, 6, 12, 3, 9, 2, 8, 4, 10, 7, 13)]
+colnames(table_test_wide) <- c('Dataset', 'RF', '', 'RF-GAP', '', 'Original', '', 'OOB', '',
+                                'PBK', '', 'RFProxIH', '')
+
+
+hline <- c(-1, 0, nrow(table_test_wide), seq(1, 23, 1))
+print(xtable(table_test_wide, align = c('|l|', '|c|', 'c', 'c|', 'c',  'c|', 'c', 'c|',
+                                         'c', 'c|', 'c', 'c|', 'c', 'r|'),
+             caption = '',
+             digits = c(0, 0, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2)),
+      include.rownames = FALSE,
+      hline.after = hline,
+      label = 'tab:testing_diff')

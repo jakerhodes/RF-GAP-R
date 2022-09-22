@@ -35,7 +35,7 @@ rf_outliers <- function(x, y, type = "rfgap", rf = NULL, ...) {
   outlier_measures <- rep(0, n)
 
 
-  if (class(x) == "rf_proximities") {
+  if ('rf_proximities' %in% class(x)) {
 
     prox <- x
 
@@ -87,7 +87,7 @@ plot.rf_outlier <- function(x, data, y, min_point_size = 2,
 
   Class <- y
 
-  scale = as.numeric(min_point_size + min_max_scale(x) * scale_factor)
+  scale <- as.numeric(min_point_size + min_max_scale(x) * scale_factor)
 
   g <- ggplot2::ggplot(mds, ggplot2::aes(x = V1, y = V2)) +
 

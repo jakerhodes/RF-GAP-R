@@ -12,15 +12,15 @@ set.seed(0)
 primes <- generate_n_primes(10000)
 seeds <- sample(primes, 100)
 
-# proximity_types <- c('rfgap', 'original', 'oob', 'rfproxih')
-proximity_types <- c('rfgap', 'original', 'oob')
+proximity_types <- c('rfgap', 'original', 'oob', 'rfproxih')
+# proximity_types <- c('rfgap', 'original', 'oob')
 # proximity_types <- c('rfproxih')
 
 # seeds <- c(420, 327, 303, 117, 1012)
 pcts  <- c(0.05, 0.10, 0.25, 0.50, 0.75)
 
 
-filenames <- c('rnaSeq')
+filenames <- c('optdigits', 'waveform', 'rnaSeq')
 
 
 combined_df <- data.frame(matrix(data = 0, nrow = 0, ncol = 5))

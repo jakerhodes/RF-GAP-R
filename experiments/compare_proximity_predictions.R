@@ -186,10 +186,12 @@ for (filename in filenames) {
 
 combined_dt <- as.data.table(combined_df)
 
-means <- combined_dt[, lapply(.SD, mean), by = .(Dataset, Prediction)]
+data.table::fwrite(combined_dt, paste0(proximity_path, 'aaa_combined_results.csv'), na = 'NA')
+
+means <- combined_dt[, lapply(.SD, mean, na.rm = TRUE), by = .(Dataset, Prediction)]
 means[, 'statistic' := 'mean']
 
-sds <- combined_dt[, lapply(.SD, sd), by = .(Dataset, Prediction)]
+sds <- combined_dt[, lapply(.SD, sd, na.rm = TRUE), by = .(Dataset, Prediction)]
 sds[, 'statistic' := 'sd']
 
 aggregated_stats <- rbind(means, sds)

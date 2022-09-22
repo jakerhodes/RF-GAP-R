@@ -8,8 +8,6 @@ library(gridExtra)
 library(ggpubr)
 
 
-# TODO: Account for classification vs. regression
-# Plot point sizes based on  regression error
 #--------------------------------------------------------#
 #                   Data Wrangling
 #--------------------------------------------------------#
@@ -18,7 +16,8 @@ set.seed(seed)
 
 data_path <- 'datasets/'
 proximity_path <- 'experiments/proximities/'
-filename <- 'ecoli'
+outlier_path   <- 'experiments/outlier_measures/'
+filename <- 'wine'
 
 prox_types <- c('rfgap', 'original', 'oob', 'pbk', 'rfproxih')
 names      <- c('RF-GAP','Original', 'OOB', 'PBK', 'RFProxIH')
@@ -48,8 +47,16 @@ Correct <- correct
 Correct[Correct == TRUE] <- 'Correct'
 Correct[Correct == FALSE] <- 'Incorrect'
 
+outlier_measures <- as.data.frame(fread(paste0(outlier_path,
+                                 filename, '_',
+                                 'rfgap', '_',
+                                 'seed', '_', seed, '.csv'
+                                 )))
+
+
 plots <- list()
 mdss  <- list()
+outlier_measures_list <- list()
 
 Group <- paste(Class, Correct, sep = ', ')
 
@@ -61,8 +68,9 @@ display.brewer.pal(12, 'Paired')
 # shapes <- c(15, 16, 17, 2, 23, 5, 25)
 
 
-colors <- palette[c(2, 2, 4, 4, 1, 3, 6, 6, 8, 8, 10, 10, 12, 12)]
-shapes <- c(15, 0, 16, 1, 17, 2, 12, 13, 18, 5, 19, 10, 3, 4)
+colors <- palette[c(4, 3, 8, 7, 10)]
+shapes <- c(15, 0, 16, 1, 17)
+scale  <- seq(2, 5, .01)
 #--------------------------------------------------------#
 #               Running MDS Detection
 #--------------------------------------------------------#
@@ -77,15 +85,21 @@ for (type in prox_types) {
                                                    'seed', '_',
                                                    seed, '.csv'))))
 
+  outlier_measures <- as.data.frame(fread(paste0(outlier_path, filename, '_', type,
+                                           '_seed_', as.character(seed), '.csv'),
+                                          ))
 
-  if (file.exists(paste0('experiments/mds/embeddings/',
+  outlier_measures_list[[type]] <- outlier_measures
+
+
+  if (file.exists(paste0('experiments/outlier_measures/embeddings/',
                          filename, '_',
                          type, '_',
                          'seed', '_',
                          seed, '.csv'))) {
 
 
-    mds <-  as.rf_mds(fread(paste0('experiments/mds/embeddings/',
+    mds <-  as.rf_mds(fread(paste0('experiments/outlier_measures/embeddings/',
                                    filename, '_',
                                    type, '_',
                                    'seed', '_',
@@ -97,7 +111,7 @@ for (type in prox_types) {
 
     mds <- rf_mds(prox = prox, mds_type = 'nonmetric')
 
-    fwrite(mds, paste0('experiments/mds/embeddings/',
+    fwrite(mds, paste0('experiments/outlier_measures/embeddings/',
                        filename, '_',
                        type, '_',
                        'seed', '_',
@@ -115,6 +129,11 @@ for (type in prox_types) {
 
   mds <- mdss[[type]]
 
+  outlier_measures <- outlier_measures_list[[type]]
+
+  scale <- .5 + min_max_scale(outlier_measures) * 3
+  scale <- scale$V1
+
 
   name <- paste(type, 'plot', sep = '_')
 
@@ -123,9 +142,10 @@ for (type in prox_types) {
                               color = Group,
                               fill = Group,
                               shape = Group)) +
-    geom_point(size = 1) +
+
+    geom_point(size = scale) +
     scale_color_manual(values = colors) +
-    scale_fill_manual(values = colors) +
+    scale_fill_manual(values  = colors) +
     scale_shape_manual(values = shapes) +
 
     theme(legend.position = 'left',
@@ -142,7 +162,7 @@ for (type in prox_types) {
     ggtitle(label = names[prox_types == type])
 
 
-  individual_pdf <- paste0('experiments/mds/figs/',
+  individual_pdf <- paste0('experiments/outlier_measures/figs/',
                            filename, '_',
                            type, '_',
                            'non-metric-mds_',
@@ -160,11 +180,11 @@ ggarrange(plots[[1]], plots[[2]], plots[[3]], plots[[4]], plots[[5]],
   theme(plot.margin = margin(0.01, 0.01, 0.01, 0.01, 'cm'))
 
 
-combined_pdf <- paste0('experiments/mds/figs/',
-                    filename, '_',
-                    'non-metric-mds_',
-                    'seed', '_',
-                    seed, '.pdf')
+combined_pdf <- paste0('experiments/outlier_measures/figs/',
+                       filename, '_',
+                       'non-metric-mds_',
+                       'seed', '_',
+                       seed, '.pdf')
 
 ggsave(combined_pdf, width = 12, height = 3.25, dpi = 1200)
 
