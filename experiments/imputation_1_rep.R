@@ -20,11 +20,13 @@ proximity_types <- c('rfgap', 'original', 'oob', 'rfproxih')
 pcts  <- c(0.05, 0.10, 0.25, 0.50, 0.75)
 
 
-filenames <- c('auto-mpg', 'arrhythmia', 'balance_scale', 'banknote', 'breast_cancer',
-               'car', 'diabetes', 'ecoli', 'glass', 'heart_disease',
-               'hill_valley', 'ionosphere', 'iris', 'liver', 'lymphography',
-               'parkinsons', 'seeds', 'sonar', 'tic-tac-toe', 'titanic', 'wine',
-               'optdigits', 'waveform', 'rnaSeq')
+# filenames <- c('auto-mpg', 'arrhythmia', 'balance_scale', 'banknote', 'breast_cancer',
+#                'car', 'diabetes', 'ecoli', 'glass', 'heart_disease',
+#                'hill_valley', 'ionosphere', 'iris', 'liver', 'lymphography',
+#                'parkinsons', 'seeds', 'sonar', 'tic-tac-toe', 'titanic', 'wine',
+#                'optdigits', 'waveform', 'rnaSeq')
+
+filenames <- c('rnaSeq')
 
 
 combined_df <- data.frame(matrix(data = 0, nrow = 0, ncol = 5))
@@ -129,4 +131,4 @@ for (filename in filenames) {
   } # proximity_types
 } # filenames
 
-fwrite(combined_df, paste0(data_df_path, 'combined_results.csv'))
+# fwrite(combined_df, paste0(data_df_path, 'combined_results.csv'))

@@ -7,7 +7,7 @@ library(stringr)
 library(dplyr)
 library(tidyverse)
 
-fig_path <- 'I:/My Drive/github/RF-GAP/experiments/figs/'
+fig_path <- 'experiments/figs/'
 proximity_path <- 'experiments/proximities_split/'
 
 errors <- fread(paste0(proximity_path, 'aggregated_errors.csv'))
@@ -89,7 +89,7 @@ g <- ggplot(data = errors,
 
 g
 
-# ggsave(paste0(fig_path, 'error_scatter.pdf'), plot = g, device = NULL, width = 6, height = 6)
+ggsave(paste0(fig_path, 'error_scatter.pdf'), plot = g, device = NULL, width = 6, height = 6)
 
 # Regression slopes
 
@@ -148,7 +148,7 @@ t
 boxplots <- ggarrange(b, t, ncol = 1, nrow = 2)
 boxplots
 
-# ggsave(paste0(fig_path, 'error_boxplots.pdf'), plot = boxplots, device = NULL, width = 7, height = 12)
+ggsave(paste0(fig_path, 'error_boxplots.pdf'), plot = boxplots, device = NULL, width = 7, height = 12)
 
 table_data <- rbind(differences[differences$Proximity != 'RF', ],
                     errors[errors$Proximity == 'RF', ])
