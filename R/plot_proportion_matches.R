@@ -12,33 +12,49 @@ combins <- combins[-which(rowSums(combins) != 2), ]
 combins
 
 
-pair_matrix <- matrix(nrow = length(proximity_types), ncol = length(proximity_types))
+proportion_matrix <- matrix(nrow = length(proximity_types), ncol = length(proximity_types))
+sd_matrix   <- matrix(nrow = length(proximity_types), ncol = length(proximity_types))
 
-rownames(pair_matrix) <- proximity_types
-colnames(pair_matrix) <- proximity_types
+rownames(proportion_matrix) <- proximity_types
+colnames(proportion_matrix) <- proximity_types
 
-diag(pair_matrix) <- 1
+diag(proportion_matrix) <- 1
+diag(sd_matrix) <- 0
 
 for (row in 1:nrow(combins)) {
   combination <- combins[row, ]
 
   included_prox <- which(combination == 1)
 
-  proportion <- mean(train_proportions_dt[rfgap == combination[1] &
-                         original == combination[2] &
-                         oob      == combination[3] &
-                         pbk      == combination[4] &
-                         rfproxih == combination[5],
-                       .('mean' = mean(proportion_matches),
-                         'sd'   = sd(proportion_matches)),
-                       by = c(proximity_types, 'dataset')]$mean)
+  combination_results <- train_proportions_dt[rfgap == combination[1] &
+                                             original == combination[2] &
+                                             oob      == combination[3] &
+                                             pbk      == combination[4] &
+                                             rfproxih == combination[5],
+                                           .('mean' = mean(proportion_matches),
+                                             'sd'   = sd(proportion_matches)),
+                                           by = c(proximity_types, 'dataset')]
 
-  pair_matrix[included_prox[1], included_prox[2]] <- proportion
-  pair_matrix[included_prox[2], included_prox[1]] <- proportion
+  proportion <- mean(combination_results$mean)
+
+
+  std <- sqrt(sum((combination_results$sd^2))/nrow(combination_results))
+
+
+  proportion_matrix[included_prox[1], included_prox[2]] <- proportion
+  proportion_matrix[included_prox[2], included_prox[1]] <- proportion
+
+  sd_matrix[included_prox[1], included_prox[2]] <- std
+  sd_matrix[included_prox[2], included_prox[1]] <- std
 
 }
 
-pair_matrix %>%
+sd_long <- sd_matrix %>%
+  as.data.frame() %>%
+  rownames_to_column('Proximity') %>%
+  pivot_longer(-c(Proximity), names_to = 'Proximity2')
+
+proportion_matrix %>%
   as.data.frame() %>%
   rownames_to_column('Proximity') %>%
   pivot_longer(-c(Proximity), names_to = 'Proximity2') %>%
@@ -46,19 +62,10 @@ pair_matrix %>%
              y = reorder(Proximity2, match(Proximity2, proximity_types)),
              fill = value)) +
   geom_raster() +
-  geom_text(aes(label = round(value, 2))) +
+  geom_text(aes(label = paste(round(value, 2), '(', round(sd_long$value, 3), ')'))) +
   scale_x_discrete(labels = proximity_names) +
   scale_y_discrete(limits = rev, labels = rev(proximity_names)) +
   scale_fill_continuous(type = 'viridis') +
   xlab('') +
   ylab('')
-
-
-
-
-heatmap(pair_matrix, Colv = NA, Rowv = NA, revC = TRUE, symm = TRUE,
-        labRow = proximity_names, labCol = proximity_names)
-
-
-
-pair_dt <- as.data.table(pair_matrix)
+  # scale_fill_gradient(low = '#ffffd9', high = '#41b6c4')
