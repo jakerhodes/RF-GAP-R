@@ -1,19 +1,17 @@
 
 
-# filenames <- c('auto-mpg', 'arrhythmia', 'balance_scale', 'banknote',
-#                'breast_cancer', 'car', 'diabetes', 'ecoli', 'glass',
-#                'heart_disease', 'hill_valley', 'ionosphere', 'iris', 'liver',
-#                'lymphography', 'parkinsons', 'seeds', 'sonar', 'tic-tac-toe',
-#                'titanic', 'wine', 'rnaSeq', 'optdigits', 'waveform')
+filenames <- c('auto-mpg', 'arrhythmia', 'balance_scale', 'banknote',
+               'breast_cancer', 'car', 'diabetes', 'ecoli', 'glass',
+               'heart_disease', 'hill_valley', 'ionosphere', 'iris', 'liver',
+               'lymphography', 'parkinsons', 'seeds', 'sonar', 'tic-tac-toe',
+               'titanic', 'wine', 'rnaSeq', 'optdigits', 'waveform')
 
-
-filenames <- c('waveform')
 
 proximity_path <- 'experiments/min_node_size/proximities/'
 
 node.sizes <- c(1, 5, 10, 20, 50)
 seeds = c(420, 327, 303, 117, 1012)
-proximity_types <- c('rfgap', 'original', 'oob', 'rfproxih')
+proximity_types <- c('rfgap', 'original', 'oob', 'pbk', 'rfproxih')
 
 
 node_df <- data.frame(matrix(data = 0, nrow = 0, ncol = 8))
@@ -144,9 +142,9 @@ for (filename in filenames) {
   node_df$prox_error <- as.numeric(node_df$prox_error)
   node_df$error_difference <- as.numeric(node_df$error_difference)
 
-  # write.table(node_df, 'experiments/min_node_size/node_size_results.csv',
-  #             sep = ',',
-  #             row.names = FALSE)
+  write.table(node_df, 'experiments/min_node_size/node_size_results.csv',
+              sep = ',',
+              row.names = FALSE)
 
 }
 
