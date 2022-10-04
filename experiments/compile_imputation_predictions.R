@@ -4,25 +4,33 @@ library(data.table)
 library(ggplot2)
 library(stringr)
 library(RColorBrewer)
+library(stringr)
 
 imputation_path <- 'experiments/imputation/'
 fig_path <- 'experiments/imputation/figs/'
 
-proximity_types <- c('rfgap', 'original', 'oob')
-proximity_names <- c('RF-GAP', 'Original', 'OOB')
+# proximity_types <- c('rfgap', 'original', 'oob')
+# proximity_names <- c('RF-GAP', 'Original', 'OOB')
 
-# proximity_types <- c('rfgap', 'original', 'oob', 'rfproxih')
-# proximity_names <- c('RF-GAP', 'Original', 'OOB', 'RFProxIH')
+proximity_types <- c('rfgap', 'original', 'oob', 'rfproxih')
+proximity_names <- c('RF-GAP', 'Original', 'OOB', 'RFProxIH')
 
 
 seeds <- c(420, 327, 303, 117, 1012)
 pcts  <- c(0.05, 0.10, 0.25, 0.50, 0.75)
 
+# filenames <- c('auto-mpg', 'arrhythmia', 'balance_scale', 'banknote', 'breast_cancer',
+#                'car', 'diabetes', 'ecoli', 'glass', 'heart_disease',
+#                'hill_valley', 'ionosphere', 'iris', 'liver', 'lymphography',
+#                'parkinsons', 'seeds', 'sonar',
+#                'tic-tac-toe', 'titanic', 'wine', 'rnaSeq', 'optdigits', 'waveform')
+
+
 filenames <- c('auto-mpg', 'arrhythmia', 'balance_scale', 'banknote', 'breast_cancer',
-               'car', 'diabetes', 'ecoli', 'glass', 'heart_disease',
-               'hill_valley', 'ionosphere', 'iris', 'liver', 'lymphography',
+               'diabetes', 'glass',
+               'hill_valley', 'ionosphere', 'iris', 'lymphography',
                'parkinsons', 'seeds', 'sonar',
-               'tic-tac-toe', 'titanic', 'wine', 'rnaSeq', 'optdigits', 'waveform')
+               'wine', 'optdigits', 'waveform')
 
 
 # filenames <- c('optdigits', 'waveform')
@@ -36,12 +44,13 @@ palette <- brewer.pal(6, 'Dark2')
 # display.brewer.pal(6, 'Dark2')
 
 
-colors <- palette[c(2, 4, 1, 5, 6)]
-shapes <- c(21, 22, 17, 23, 25)
+colors <- palette[c(2, 5, 1, 6)]
+shapes <- c(2, 22, 17, 1)
 
 pct_labs <- paste0('MCAR ', pcts * 100, '%')
 names(pct_labs) <- pcts
 
+plots <- list()
 
 for (filename in filenames) {
 
@@ -143,7 +152,6 @@ for (filename in filenames) {
   ggsave(paste0(fig_path, filename, '.pdf'), g, device = NULL, width = 16, height = 4)
 
 
-
   h <- ggplot(data = norms_data, aes(x = iteration, y = mean, color = name,
                                      shape = name)) +
     geom_point() +
@@ -160,38 +168,81 @@ for (filename in filenames) {
                scales = 'free') +
     theme(legend.position = c(.05, .75),
           axis.text.x = element_text(size = 15),
-          axis.text.y = element_text(size = 15),
-          strip.text.x = element_text(size = 17),
+          axis.text.y = element_text(size = 10),
+          # strip.text.x = element_text(size = 17),
+          strip.text.x = element_blank(),
           axis.title.y = element_text(size = 17),
-          axis.title.x = element_text(size = 17),
+          # axis.title.x = element_text(size = 17),
+          axis.title.x = element_blank(),
           legend.text = element_text(size = 15),
           legend.title = element_text(size = 16))
 
 
   h
 
-  ggsave(paste0(fig_path, filename, '_independent_scale.pdf'), h, device = NULL, width = 16, height = 4)
+  # ggsave(paste0(fig_path, filename, '_independent_scale.pdf'), h, device = NULL, width = 16, height = 4)
+
+  plots[[filename]] <- h
 
 
 }
 
+names(plots) <- gsub('_', ' ', names(plots))
+names(plots) <- str_to_title(names(plots))
 
-# for (pct in pcts) {
-#   boxplot(scores[scores['pct'] == pct, 2:4])
-# }
+#------------------------------------------------------------------------------#
 
-# long <- melt(setDT(scores), id.vars = 'pct', measure.vars = c(2, 3, 4), variable.name = "proximity_type")
-#
-#
-# anova <- aov(value ~ proximity_type, long)
-#
-# summary(anova)
-#
-#
-# anova_pct <- aov(value ~ pct, long)
-# summary(anova_pct)
-# boxplot(scores[, ])
+ggarrange(plots[[1]] + rremove("x.text") + ylab(names(plots)[1]) +
+            theme(strip.text.x = element_text(size = 12)),
+          plots[[2]] + rremove("x.text") + ylab(names(plots)[2]),
+          plots[[3]] + rremove("x.text") + ylab(names(plots)[3]),
+          plots[[4]] + rremove("x.text") + ylab(names(plots)[4]),
+          plots[[5]] + rremove("x.text") + ylab(names(plots)[5]),
+          plots[[6]] + theme(axis.title.x = element_text(size = 12)) +
+            ylab(names(plots)[6]),
+          common.legend = TRUE,
+          nrow = 6,
+          align = 'v',
+          label.x = paste0('MCAR ', c(5, 10, 25, 50, 75), '%')) +
 
-# plot(1:11, norms[1, 4:14])
+  theme(plot.margin = margin(0.0001, 0.0001, 0.0001, 0.0001, 'cm'))
 
+ggsave('experiments/figs/imputation_1-5.pdf', height = 11, width = 10)
+
+#------------------------------------------------------------------------------#
+
+ggarrange(plots[[7]] + rremove("x.text") + ylab(names(plots)[7]) +
+            theme(strip.text.x = element_text(size = 12)),
+          plots[[8]] + rremove("x.text") + ylab(names(plots)[8]),
+          plots[[9]] + rremove("x.text") + ylab(names(plots)[9]),
+          plots[[10]] + rremove("x.text") + ylab(names(plots)[10]),
+          plots[[11]] + rremove("x.text") + ylab(names(plots)[11]),
+          plots[[12]] + theme(axis.title.x = element_text(size = 12)) +
+            ylab(names(plots)[12]),
+          common.legend = TRUE,
+          nrow = 6,
+          align = 'v',
+          label.x = paste0('MCAR ', c(5, 10, 25, 50, 75), '%')) +
+
+  theme(plot.margin = margin(0.0001, 0.0001, 0.0001, 0.0001, 'cm'))
+
+ggsave('experiments/figs/imputation_6-12.pdf', height = 11, width = 10)
+
+#------------------------------------------------------------------------------#
+
+ggarrange(plots[[13]] + rremove("x.text") + ylab(names(plots)[13]) +
+            theme(strip.text.x = element_text(size = 12)),
+          plots[[14]] + rremove("x.text") + ylab(names(plots)[14]),
+          plots[[15]] + rremove("x.text") + ylab(names(plots)[15]),
+          plots[[16]] + rremove("x.text") + ylab(names(plots)[16]),
+          plots[[17]] + theme(axis.title.x = element_text(size = 12)) +
+            ylab(names(plots)[17]),
+          common.legend = TRUE,
+          nrow = 6,
+          align = 'v',
+          label.x = paste0('MCAR ', c(5, 10, 25, 50, 75), '%')) +
+
+  theme(plot.margin = margin(0.0001, 0.0001, 0.0001, 0.0001, 'cm'))
+
+ggsave('experiments/figs/imputation_13-17.pdf', height = 11, width = 10)
 

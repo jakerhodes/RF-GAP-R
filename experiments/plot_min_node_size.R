@@ -7,8 +7,8 @@ library(ggpubr)
 node_df <- read.table('experiments/min_node_size/node_size_results.csv',
                     sep = ',', header = TRUE)
 
-proximity_order <- c('rfgap', 'original', 'oob', 'rfproxih')
-proximity_names <- c('RF-GAP', 'Original', 'OOB', 'RFProxIH')
+proximity_order <- c('rfgap', 'original', 'oob', 'pbk', 'rfproxih')
+proximity_names <- c('RF-GAP', 'Original', 'OOB', 'PBK', 'RFProxIH')
 
 
 rfgap_df <- node_df[node_df[, 'proximity_type'] == 'rfgap', ]
@@ -28,7 +28,8 @@ summary(anova)
 palette <- brewer.pal(6, 'Dark2')
 display.brewer.pal(6, 'Dark2')
 
-colors <- palette[c(1, 5, 2, 6)]
+colors <- palette[c(1, 5, 2, 3, 6)]
+colors_4 <- palette[c(1, 5, 2, 6)]
 
 box <- ggplot(data = classification_df) +
   geom_boxplot(aes(y = pct_no_match, x = as.factor(node_size), fill = reorder(proximity_type, match(proximity_type, proximity_order)))) +
@@ -59,7 +60,7 @@ box
 box.regression <- ggplot(data = regression_df) +
   geom_boxplot(aes(y = pct_no_match, x = as.factor(node_size), fill = reorder(proximity_type, match(proximity_type, proximity_order)))) +
   scale_color_manual(values = colors) +
-  scale_fill_manual(labels = proximity_names, values = colors) +
+  scale_fill_manual(labels = proximity_names, values = colors_4) +
 
   theme(legend.position = 'right',
         legend.text     = element_text(size = 15),
@@ -121,7 +122,7 @@ error_plot
 error.regression <- ggplot(data = regression_df) +
   geom_boxplot(aes(y = prox_error, x = as.factor(node_size), fill = reorder(proximity_type, match(proximity_type, proximity_order)))) +
   scale_color_manual(values = colors) +
-  scale_fill_manual(labels = proximity_names, values = colors) +
+  scale_fill_manual(labels = proximity_names, values = colors_4) +
 
   theme(legend.position = 'right',
         legend.text     = element_text(size = 15),

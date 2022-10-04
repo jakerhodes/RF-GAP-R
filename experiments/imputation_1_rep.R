@@ -26,7 +26,7 @@ pcts  <- c(0.05, 0.10, 0.25, 0.50, 0.75)
 #                'parkinsons', 'seeds', 'sonar', 'tic-tac-toe', 'titanic', 'wine',
 #                'optdigits', 'waveform', 'rnaSeq')
 
-filenames <- c('rnaSeq')
+filenames <- c('waveform')
 
 
 combined_df <- data.frame(matrix(data = 0, nrow = 0, ncol = 5))

@@ -1,4 +1,5 @@
 # This file is used to compare agreements across proximity-weighted predictions
+library(gtools)
 
 proximity_path <- 'experiments/proximities_split/'
 

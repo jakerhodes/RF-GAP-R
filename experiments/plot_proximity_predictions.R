@@ -23,8 +23,6 @@ differences[Proximity == 'pbk_diff', Proximity := 'PBK']
 differences[Proximity == 'rfproxih_diff', Proximity := 'RFProxIH']
 
 
-
-
 # TODO: Add this order to the imputations
 proximity_names <- c('RF', 'RF-GAP', 'Original', 'OOB', 'PBK', 'RFProxIH')
 proximity_order <- c('RF-GAP', 'Original', 'OOB', 'PBK', 'RFProxIH', 'RF')
@@ -113,7 +111,8 @@ b <- ggplot(data = differences[differences$Proximity != 'RF', ],
         legend.text = element_text(size = 15),
         legend.title = element_text(size = 16)) +
 
-  xlab('|RF OOB Error - Proximity Train Error|') +
+  # xlab('|RF OOB Error - Proximity Train Error|') +
+  xlab('Proportion of Non-Matching OOB Predictions') +
   ylab('') +
   xlim(c(0, 0.4))
 
@@ -138,7 +137,8 @@ t <- ggplot(data = differences[differences$Proximity != 'RF', ],
         legend.text = element_text(size = 15),
         legend.title = element_text(size = 16)) +
 
-  xlab('|RF Test Error - Proximity Test Error|') +
+  # xlab('|RF Test Error - Proximity Test Error|') +
+  xlab('Proportion of Non-Matching Test Predictions') +
   ylab('') +
   xlim(c(0, 0.4))
 

@@ -1,5 +1,6 @@
 library(ggplot2)
 library(tidyverse)
+library(gtools)
 
 train_proportions_dt <- fread('experiments/proximities_split/aa_proportion_matches_train.csv')
 test_proportions_dt <- fread('experiments/proximities_split/aa_proportion_matches_test.csv')
@@ -63,9 +64,16 @@ proportion_matrix %>%
              fill = value)) +
   geom_raster() +
   geom_text(aes(label = paste(round(value, 2), '(', round(sd_long$value, 3), ')'))) +
+  theme(plot.title = element_text(hjust = 0.5)) +
   scale_x_discrete(labels = proximity_names) +
   scale_y_discrete(limits = rev, labels = rev(proximity_names)) +
-  scale_fill_continuous(type = 'viridis') +
+  # scale_fill_continuous(type = 'viridis') +
   xlab('') +
-  ylab('')
-  # scale_fill_gradient(low = '#ffffd9', high = '#41b6c4')
+  ylab('') +
+  ggtitle('Proportion of Train Prediction Matches') +
+  # scale_fill_gradient(low = '#e0f3db', high = '#43a2ca') # For training set
+  scale_fill_gradient(low = '#bcdad6', high = '#43a2ca') # For test set
+
+
+
+ggsave('experiments/figs/proportion_matches_train.pdf', width = 7, height = 6)

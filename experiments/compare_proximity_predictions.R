@@ -36,6 +36,11 @@ for (filename in filenames) {
 
   colnames(prediction_matches) <- c('Dataset', 'Seed', 'Prediction', 'RF', proximity_types, proximity_diffs)
 
+  data <- read.table(paste0('datasets/', filename, '.csv'),
+                     sep = ',', header = TRUE)
+  x <- data[, -1]
+  y <- data[, 1]
+
 
   counter <- 1
   for (seed in seeds) {
@@ -43,10 +48,6 @@ for (filename in filenames) {
     print(paste0('    ', seed))
     set.seed(seed)
 
-    data <- read.table(paste0('datasets/', filename, '.csv'),
-                       sep = ',', header = TRUE)
-    x <- data[, -1]
-    y <- data[, 1]
 
     prediction_type <- 'regression'
 

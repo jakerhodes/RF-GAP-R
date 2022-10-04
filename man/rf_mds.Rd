@@ -5,7 +5,7 @@
 \title{rf_mds generates a two-dimensional MDS plot given random forest proximities}
 \usage{
 rf_mds(
-  x,
+  x = NULL,
   y = NULL,
   n_dim = 2,
   prox = NULL,

@@ -7,6 +7,7 @@ library(ggplot2)
 library(stringr)
 library(dplyr)
 library(tidyverse)
+library(xtable)
 
 
 proximity_names <- c('RF-GAP', 'Original', 'OOB', 'PBK', 'RFProxIH')
@@ -50,7 +51,17 @@ wide_df <-
   wide_df %>%
   mutate_if(is.numeric, round, 3)
 
-hline <- c(-1, 0, nrow(wide_df), seq(3, 54, 3))
+#############################################################
+
+# wide_dt <- as.data.table(wide_df)
+#
+# wide_dt['5%' == max('5%'), , by = Dataset]
+# wide_dt[,  lapply(.SD, function(x) {paste0('\textbf{', x, '}')}), .SDcols = c(3, 5, 7, 9, 11)]
+#
+# wide_dt[,  lapply(c('5%', '10%'), function(x) {paste0('\textbf{', x, '}')})]
+############################################################
+
+hline <- c(-1, 0, nrow(wide_df), seq(4, 80, 4))
 print(xtable(wide_df, align = c('|l|', '|l|', 'c|', 'c',  'c|', 'c', 'c|',
                                  'c', 'c|', 'c', 'c|', 'c', 'r|'),
              caption = '',

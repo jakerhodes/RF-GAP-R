@@ -4,7 +4,7 @@
 \alias{rf_impute}
 \title{A function to impute missing values from a dataset.}
 \usage{
-rf_impute(x, y, type = "rfgap", n_iters = 1, x_true = NULL, ...)
+rf_impute(x, y, type = "rfgap", n_iters = 1, x_true = NULL, seed = NULL, ...)
 }
 \arguments{
 \item{x}{A dataframe or matrix of data. Rows (n) are observations,
