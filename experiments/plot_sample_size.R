@@ -3,14 +3,14 @@ library(ggplot2)
 library(RColorBrewer)
 
 errors_dt <- fread('experiments/sample_size/errors.csv')
-aggregate_dt <- errors_dt[, .('Mean_Train' = mean(Train_Error),
-                              'SD_Train'   = sd(Train_Error),
-                              'Mean_Test'  = mean(Test_Error),
-                              'SD_Test'    = sd(Test_Error),
-                              'Mean_RF_OOB' = mean(RF_OOB),
+aggregate_dt <- errors_dt[, .('Mean_Train'   = mean(Train_Error),
+                              'SD_Train'     = sd(Train_Error),
+                              'Mean_Test'    = mean(Test_Error),
+                              'SD_Test'      = sd(Test_Error),
+                              'Mean_RF_OOB'  = mean(RF_OOB),
                               'Mean_RF_Test' = mean(RF_Test),
-                              'SD_RF_OOB' = sd(RF_OOB),
-                              'SD_RF_Test' = sd(RF_Test)
+                              'SD_RF_OOB'    = sd(RF_OOB),
+                              'SD_RF_Test'   = sd(RF_Test)
                               ),
                           by = c('Proximity', 'Sample_Size')]
 

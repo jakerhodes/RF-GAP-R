@@ -1,11 +1,5 @@
 library(ggplot2)
 
-# TODO: Loop through all sizes
-# TODO: Repeat 10 times
-# TODO: Plot differences in errors across times
-# TODO: Try more than binar class? regression? Multi-class?
-
-
 sizes <- c(100, 200, 500, 1000, 2000, 5000, 10000)
 seeds <- c(420, 327, 303, 117, 1012, 840, 654, 606, 234, 2024)
 nvars <- 10
