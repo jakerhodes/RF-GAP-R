@@ -215,28 +215,6 @@ for (i in 1:length(sizes)) {
 }
 
 
-# TODO: Differenciate between train and test!  Still need to do this!!!
 errors_dt <- as.data.table(errors_df)
-#
+
 fwrite(errors_dt, 'experiments/sample_size/errors.csv')
-#
-# aggregate_dt <- errors_dt[, .('Mean' = mean(Error_Difference), 'SD' = sd(Error_Difference)), by = c('Proximity', 'Sample_Size')]
-#
-# ggplot(data = as.data.frame(aggregate_dt), aes(x = as.factor(Sample_Size), y = Mean, fill = Proximity)) +
-#   geom_boxplot()
-#
-# ggplot(data = errors_df, aes(x = as.factor(Sample_Size), y = Error_Difference, fill = Proximity)) +
-#   geom_boxplot()
-#
-#
-# ggplot(data = as.data.frame(aggregate_dt), aes(x = Sample_Size, y = Mean, color = Proximity)) +
-#   geom_point() +
-#   geom_errorbar(aes(ymin = Mean - SD,
-#                 ymax = Mean + SD),
-#                 width = 2)
-
-
-# imp <- importance(rf)
-#
-# plot(imp)
-

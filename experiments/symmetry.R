@@ -1,8 +1,10 @@
 library(data.table)
+library(ggplot2)
 
 proximity_path <- 'experiments/symmetry/proximities/'
 n_trees <- c(100, 500, 1000, 5000, 10000, 50000)
-# n_trees <- c(100, 500)
+
+
 size <- 500
 seeds <- c(420, 327, 303, 117, 1012, 840, 654, 606, 234, 2024)
 nvars <- 10
@@ -40,9 +42,6 @@ for (n_tree in n_trees) {
 #     y_test <- y[-train_idx]
 
 
-    rf <- ranger(x = x, y = y, keep.inbag = TRUE, write.forest = TRUE,
-                 oob.error = TRUE, importance = 'permutation',
-                 num.trees = n_tree)
 
     # rf_preds_oob  <- rf$predictions
     # rf_preds_test <- predict(rf, data = x_test, seed = seed)$predictions
@@ -64,6 +63,10 @@ for (n_tree in n_trees) {
                                                         '_trees_', n_tree,
                                                         '.csv'))))
     } else {
+
+      rf <- ranger(x = x, y = y, keep.inbag = TRUE, write.forest = TRUE,
+                   oob.error = TRUE, importance = 'permutation',
+                   num.trees = n_tree)
 
 
 
@@ -93,7 +96,7 @@ for (n_tree in n_trees) {
 
 
 
-    norm <- sqrt(sum((rfgap - t(rfgap))^2))
+    norm <- sqrt(sum((rfgap - t(rfgap))^2)) / size^2
 
     norms_df[counter, ] <- c(n_tree, seed, norm)
     counter <- counter + 1
@@ -106,4 +109,22 @@ norms_dt <- as.data.table(norms_df)
 mean_norms <- norms_dt[, .('mean' = mean(norm),
                            'sd'   = sd(norm)), by = n_tree]
 
-plot(mean_norms$mean)
+ggplot(data = as.data.frame(mean_norms), aes(x = n_trees, y = mean)) +
+  geom_point() +
+  geom_errorbar(aes(ymin = mean - sd,
+                    ymax = mean + sd),
+                width = 0.05) +
+  ylab('MSE Across p(i, j) and p(j, i)') +
+  xlab('Number of Trees') +
+  scale_x_continuous(trans = 'log10', breaks = n_trees) +
+  annotation_logticks(sides = 'b') +
+  ggtitle(label = 'Symmetry of RF-GAP') +
+  theme(axis.text.x = element_text(size = 12),
+        axis.text.y = element_text(size = 12),
+        axis.title  = element_text(size = 14),
+        legend.text = element_text(size = 12),
+        legend.title = element_text(size = 14),
+        legend.position = c(.9, .85),
+        plot.title = element_text(size = 15, hjust = 0.5))
+
+
