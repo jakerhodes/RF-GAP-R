@@ -1,8 +1,7 @@
 library(ggplot2)
 
-sizes <- c(100, 200, 500, 1000, 2000, 5000, 10000)
-seeds <- c(420, 327, 303, 117, 1012, 840, 654, 606, 234, 2024,
-           1260, 981, 909, 351, 3036, 1680, 1308, 1212, 468, 4048)
+sizes <- c(10000)
+seeds <- c(1680, 1308, 1212, 468, 4048)
 nvars <- 10
 
 get_error <- function(y_true, y_test) {
@@ -93,87 +92,87 @@ for (i in 1:length(sizes)) {
              col.names = FALSE)
     }
 
-      if (file.exists(paste0(proximity_path,
-                             'size_', size,
-                             '_oob', '_',
-                             '70_pct_train_',
-                             'seed', '_',
-                             seed, '.csv'))) {
-
-        oob <- as.rf_proximities(as.matrix(fread(paste0(proximity_path,
-                                                          'size_', size,
-                                                          '_oob', '_',
-                                                          '70_pct_train_',
-                                                          'seed', '_',
-                                                          seed, '.csv'))))
-      } else {
-
-
-
-        oob <- tryCatch({
-
-          get_proximities(x = x_train, y = y_train, x_test = x_test, rf = rf,
-                          type = 'oob')
-
-
-
-        }, error = function(e) {
-
-          0
-
-        })
-
-        fwrite(oob, paste0(proximity_path,
+    if (file.exists(paste0(proximity_path,
                            'size_', size,
                            '_oob', '_',
                            '70_pct_train_',
                            'seed', '_',
-                           seed, '.csv'),
-               col.names = FALSE)
-      }
+                           seed, '.csv'))) {
+
+      oob <- as.rf_proximities(as.matrix(fread(paste0(proximity_path,
+                                                      'size_', size,
+                                                      '_oob', '_',
+                                                      '70_pct_train_',
+                                                      'seed', '_',
+                                                      seed, '.csv'))))
+    } else {
 
 
 
-        if (file.exists(paste0(proximity_path,
-                               'size_', size,
-                               '_original', '_',
-                               '70_pct_train_',
-                               'seed', '_',
-                               seed, '.csv'))) {
+      oob <- tryCatch({
 
-          original <- as.rf_proximities(as.matrix(fread(paste0(proximity_path,
-                                                            'size_', size,
-                                                            '_original', '_',
-                                                            '70_pct_train_',
-                                                            'seed', '_',
-                                                            seed, '.csv'))))
-        } else {
+        get_proximities(x = x_train, y = y_train, x_test = x_test, rf = rf,
+                        type = 'oob')
 
 
 
-          original <- tryCatch({
+      }, error = function(e) {
 
-            get_proximities(x = x_train, y = y_train, x_test = x_test,
-                            y_test = y_test, rf = rf,
-                            type = 'original')
+        0
+
+      })
+
+      fwrite(oob, paste0(proximity_path,
+                         'size_', size,
+                         '_oob', '_',
+                         '70_pct_train_',
+                         'seed', '_',
+                         seed, '.csv'),
+             col.names = FALSE)
+    }
 
 
 
-          }, error = function(e) {
+    if (file.exists(paste0(proximity_path,
+                           'size_', size,
+                           '_original', '_',
+                           '70_pct_train_',
+                           'seed', '_',
+                           seed, '.csv'))) {
 
-            0
+      original <- as.rf_proximities(as.matrix(fread(paste0(proximity_path,
+                                                           'size_', size,
+                                                           '_original', '_',
+                                                           '70_pct_train_',
+                                                           'seed', '_',
+                                                           seed, '.csv'))))
+    } else {
 
-          })
 
 
-          fwrite(original, paste0(proximity_path,
-                                  'size_', size,
-                                  '_original', '_',
-                                  '70_pct_train_',
-                                  'seed', '_',
-                                  seed, '.csv'),
-                 col.names = FALSE)
-        }
+      original <- tryCatch({
+
+        get_proximities(x = x_train, y = y_train, x_test = x_test,
+                        y_test = y_test, rf = rf,
+                        type = 'original')
+
+
+
+      }, error = function(e) {
+
+        0
+
+      })
+
+
+      fwrite(original, paste0(proximity_path,
+                              'size_', size,
+                              '_original', '_',
+                              '70_pct_train_',
+                              'seed', '_',
+                              seed, '.csv'),
+             col.names = FALSE)
+    }
 
 
     rf_test_error        <- get_error(y_test, predict(rf, x_test)$predictions)

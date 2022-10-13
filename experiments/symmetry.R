@@ -2,7 +2,7 @@ library(data.table)
 library(ggplot2)
 
 proximity_path <- 'experiments/symmetry/proximities/'
-n_trees <- c(100, 500, 1000, 5000, 10000, 50000)
+n_trees <- c(100, 500, 1000, 5000, 10000, 20000, 50000)
 
 
 size <- 500
@@ -114,7 +114,7 @@ ggplot(data = as.data.frame(mean_norms), aes(x = n_trees, y = mean)) +
   geom_errorbar(aes(ymin = mean - sd,
                     ymax = mean + sd),
                 width = 0.05) +
-  ylab('MSE Across p(i, j) and p(j, i)') +
+  ylab('MSE Between all p(i, j) and p(j, i)') +
   xlab('Number of Trees') +
   scale_x_continuous(trans = 'log10', breaks = n_trees) +
   annotation_logticks(sides = 'b') +
@@ -127,4 +127,5 @@ ggplot(data = as.data.frame(mean_norms), aes(x = n_trees, y = mean)) +
         legend.position = c(.9, .85),
         plot.title = element_text(size = 15, hjust = 0.5))
 
+ggsave('experiments/symmetry/rfgap_symmetry.pdf', width = 7, height = 6)
 
