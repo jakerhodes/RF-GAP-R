@@ -145,11 +145,11 @@ error.regression
 
 ggarrange(error_plot, error.regression,
           common.legend = TRUE,
-          nrow = 2) +
+          nrow = 1) +
 
   theme(plot.margin = margin(0.1, 0.01, 0.1, 0.01, 'cm'))
 
 # TODO: Compile these together with single legend
 
 
-ggsave('experiments/min_node_size/figs/node_size_errors.pdf', width = 6, height = 10, dpi = 1200)
+ggsave('experiments/min_node_size/figs/node_size_errors.pdf', width = 10, height = 6, dpi = 1200)

@@ -5,6 +5,7 @@ library(ggplot2)
 library(stringr)
 library(RColorBrewer)
 library(stringr)
+library(ggpubr)
 
 imputation_path <- 'experiments/imputation/'
 fig_path <- 'experiments/imputation/figs/'
@@ -238,11 +239,11 @@ ggarrange(plots[[13]] + rremove("x.text") + ylab(names(plots)[13]) +
           plots[[17]] + theme(axis.title.x = element_text(size = 12)) +
             ylab(names(plots)[17]),
           common.legend = TRUE,
-          nrow = 6,
+          nrow = 5,
           align = 'v',
           label.x = paste0('MCAR ', c(5, 10, 25, 50, 75), '%')) +
 
   theme(plot.margin = margin(0.0001, 0.0001, 0.0001, 0.0001, 'cm'))
 
-ggsave('experiments/figs/imputation_13-17.pdf', height = 11, width = 10)
+ggsave('experiments/figs/imputation_13-17.pdf', height = 9, width = 10)
 

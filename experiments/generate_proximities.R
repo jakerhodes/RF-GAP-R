@@ -11,13 +11,13 @@ proximity_types <- c('rfgap', 'original', 'oob', 'pbk', 'rfproxih')
 
 seeds = c(420, 327, 303, 117, 1012)
 
-filenames <- c('auto-mpg', 'arrhythmia', 'balance_scale', 'banknote', 'breast_cancer',
-               'car', 'diabetes', 'ecoli', 'glass', 'heart_disease',
-               'hill_valley', 'ionosphere', 'iris', 'liver', 'lymphography',
-               'parkinsons','seeds', 'sonar',
-               'tic-tac-toe', 'titanic', 'wine', 'rnaSeq', 'optdigits', 'waveform')
+# filenames <- c('auto-mpg', 'arrhythmia', 'balance_scale', 'banknote', 'breast_cancer',
+#                'car', 'diabetes', 'ecoli', 'glass', 'heart_disease',
+#                'hill_valley', 'ionosphere', 'iris', 'liver', 'lymphography',
+#                'parkinsons','seeds', 'sonar',
+#                'tic-tac-toe', 'titanic', 'wine', 'rnaSeq', 'optdigits', 'waveform')
 
-
+filenames <- c('optdigits')
 
 for (filename in filenames) {
 

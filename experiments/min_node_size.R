@@ -4,7 +4,7 @@ filenames <- c('auto-mpg', 'arrhythmia', 'balance_scale', 'banknote',
                'breast_cancer', 'car', 'diabetes', 'ecoli', 'glass',
                'heart_disease', 'hill_valley', 'ionosphere', 'iris', 'liver',
                'lymphography', 'parkinsons', 'seeds', 'sonar', 'tic-tac-toe',
-               'titanic', 'wine', 'rnaSeq', 'optdigits', 'waveform')
+               'titanic', 'wine', 'rnaSeq', 'optdigits')
 
 
 proximity_path <- 'experiments/min_node_size/proximities/'
