@@ -12,8 +12,6 @@ count_unique <- function(v) {
   length(uniqv)
 }
 
-# TODO: Set to ignore categorical variables but set warning
-
 min_max_scale <- function(x) {
 
   factor_cols <- sapply(as.data.frame(x), function(x) {

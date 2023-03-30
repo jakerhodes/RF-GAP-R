@@ -2,7 +2,7 @@ get_rfgap <- function(rf, x, x_test = NULL) {
 
   leaf_matrix <- stats::predict(rf, x, type = "terminalNodes")$predictions
 
-  # If test set available and want proximities to test set
+  # If test set available and want proximities generated for a test set
   if (!is.null(x_test)) {
     leaf_matrix_test <- stats::predict(rf, x_test,
                                        type = "terminalNodes"

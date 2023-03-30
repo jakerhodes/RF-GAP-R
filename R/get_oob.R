@@ -15,7 +15,7 @@ get_oob_prox <- function(rf, x, x_test = NULL) {
 
   in_bag_count <- matrix(unlist(rf$inbag.counts), ncol = num_trees)
 
-  # New for test set
+  # For test set
   if (!is.null(x_test)) {
     in_bag_count <- rbind(
       in_bag_count,

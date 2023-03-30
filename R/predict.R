@@ -3,10 +3,7 @@
 #--------------------------------------------------------------#
 
 # TODO: Build a separate function for comparing predictions
-# TODO: Make friendly for prediction on a test setsd (Look into how done with knn)
-# Perhaps easiest to supply which indices are for test/train examples for
-# the full proximity matrix. I DON"T THINK THIS WAS CORRECTLY DONE FOR THE
-# PAPER RESULTS FOR OOB and ORIGINAL TYPES!!!
+# TODO: Make friendly for prediction on a test sets (Look into how done with knn)
 
 #' A function to make predictions using random forest proximities
 #'  (rf_proximities class)

@@ -1,6 +1,5 @@
 # TODO: make extension to new points; not only for training examples
 # TODO: make available as parallel function
-# TODO: Add w parameter for pbk
 
 #' This function generates random forest proximities of a variety of types.
 #'
@@ -17,8 +16,6 @@
 #' @param x_test An (optional) test dataset (dataframe or matrix)
 #' @param type The type of proximities to be obtained.
 #'  Options are rfgap (default), original, oob, pbk, or rfproxih.
-#' @param nk Number of terminal node neighbors to consider when calling type =
-#'  rfproxih. (default 10).
 #' @param ... Additional argument options for ranger(). (If rf is not supplied).
 #' @return A matrix of proximity values.
 #' @examples
@@ -29,7 +26,7 @@
 #' prox <- get_proximities(x, y)
 #' @export
 get_proximities <- function(x, y = NULL, rf = NULL,
-                            x_test = NULL, y_test = NULL, type = "rfgap", nk = 10,
+                            x_test = NULL, y_test = NULL, type = "rfgap",
                             w = 1, ...) {
 
 
@@ -56,8 +53,6 @@ get_proximities <- function(x, y = NULL, rf = NULL,
 
   if (is.null(rf) && is.null(y)) {
     stop("Either y or rf must be supplied")
-  # } else if (!is.null(rf) && !is.null(y)) {
-  #   warning("Since rf is supplied, y will be ignored")
   } else if (is.null(rf) && !is.null(y)) {
     rf <- ranger::ranger(
       x = x, y = y,
@@ -71,9 +66,6 @@ get_proximities <- function(x, y = NULL, rf = NULL,
     "rfgap"    = get_rfgap(rf, x, x_test),
     "original" = get_original_proximities(rf, x, x_test),
     "oob"      = get_oob_prox(rf, x, x_test),
-    "pbk" = get_pbk_proximities(rf, x, w = w, x_test = x_test, ...),
-    "rfproxih" = get_rfproxih(rf, x, y, nk, x_test = x_test,
-                              y_test = y_test, ...),
     stop("Only types rfgap, original, and oob are supported.
          Please select one of these types")
   )
