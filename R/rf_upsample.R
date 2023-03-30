@@ -1,4 +1,3 @@
-#' This function generates random forest proximities of a variety of types.
 #' THIS FUNCTION IS NOT CURRENLY IMPLEMENTED
 #'
 #' @name rf_upsample
