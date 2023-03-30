@@ -4,17 +4,7 @@
 \alias{get_proximities}
 \title{This function generates random forest proximities of a variety of types.}
 \usage{
-get_proximities(
-  x,
-  y = NULL,
-  rf = NULL,
-  x_test = NULL,
-  y_test = NULL,
-  type = "rfgap",
-  nk = 10,
-  w = 1,
-  ...
-)
+get_proximities(x, y = NULL, rf = NULL, x_test = NULL, type = "rfgap", ...)
 }
 \arguments{
 \item{x}{A dataframe or matrix of data. Rows (n) are observations,
@@ -30,9 +20,6 @@ write.forest = TRUE and keep.inbag = TRUE.}
 
 \item{type}{The type of proximities to be obtained.
 Options are rfgap (default), original, oob, pbk, or rfproxih.}
-
-\item{nk}{Number of terminal node neighbors to consider when calling type =
-rfproxih. (default 10).}
 
 \item{...}{Additional argument options for ranger(). (If rf is not supplied).}
 }

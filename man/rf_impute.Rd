@@ -21,6 +21,8 @@ rfgap (default), original, or oob.}
 This is used to compare imputation methods, not used in "real-life"
 applications.}
 
+\item{seed}{random state used when training forests}
+
 \item{...}{Additional argument options for ranger(). (If rf is not supplied).}
 }
 \value{

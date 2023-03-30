@@ -13,6 +13,7 @@
 #'   This is used to compare imputation methods, not used in "real-life"
 #'   applications.
 #' @param n_iters The number of iterations for imputation.  The default is 1.
+#' @param seed random state used when training forests
 #' @return A dataframe with imputed values if x_true is NULL. Else, a list
 #'   which contains the imputed dataset and error values (MSE between the
 #'   true and imputed data)

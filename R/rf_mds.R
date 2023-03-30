@@ -5,11 +5,13 @@
 #' @param x A dataframe or matrix of data. Rows (n) are observations,
 #'   columns (d) are variables.
 #' @param y The labels corresponding to x. Should be of type factor or numeric.
+#' @param n_dim how many dimensions should be in the resulting mds embedding?
 #' @param rf A forest object of s3 class 'ranger'. Note: rf requires
 #'   write.forest = TRUE and keep.inbag = TRUE.
 #' @param type The type of proximities to be obtained.
 #'  Options are rfgap (default), original, oob, pbk, or rfproxih.
 #' @param mds_type Type of MDS to be run; 'metric' (default) or 'nonmetric'
+#' @param seed random state for the random forest
 #' @param ... additional ranger options.  Not used if rf is supplied
 #' @return MDS coordinates. A plot will be generated if plot = TRUE
 # TODO: Add example.

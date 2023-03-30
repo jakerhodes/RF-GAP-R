@@ -22,6 +22,8 @@ columns (d) are variables.}
 
 \item{y}{The labels corresponding to x. Should be of type factor or numeric.}
 
+\item{n_dim}{how many dimensions should be in the resulting mds embedding?}
+
 \item{prox}{A pre-computed rf_proximities object. If provided, x, rf, and
 type will be ignored}
 
@@ -32,6 +34,8 @@ write.forest = TRUE and keep.inbag = TRUE.}
 Options are rfgap (default), original, oob, pbk, or rfproxih.}
 
 \item{mds_type}{Type of MDS to be run; 'metric' (default) or 'nonmetric'}
+
+\item{seed}{random state for the random forest}
 
 \item{...}{additional ranger options.  Not used if rf is supplied}
 }

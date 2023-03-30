@@ -26,8 +26,7 @@
 #' prox <- get_proximities(x, y)
 #' @export
 get_proximities <- function(x, y = NULL, rf = NULL,
-                            x_test = NULL, y_test = NULL, type = "rfgap",
-                            w = 1, ...) {
+                            x_test = NULL, type = "rfgap", ...) {
 
 
   x <- as.data.frame(x)

@@ -2,15 +2,19 @@
 % Please edit documentation in R/rf_upsample.R
 \name{rf_upsample}
 \alias{rf_upsample}
-\title{This function generates random forest proximities of a variety of types.}
+\title{This function generates random forest proximities of a variety of types.
+THIS FUNCTION IS NOT CURRENLY IMPLEMENTED}
 \usage{
 rf_upsample(
   x,
   y,
   rf = NULL,
+  type = "rfgap",
+  x_test = NULL,
   prox = NULL,
   n_samples = 2 * nrow(x),
-  class_weights = "uniform"
+  class_weights = "uniform",
+  ...
 )
 }
 \arguments{
@@ -23,10 +27,17 @@ columns (d) are variables.}
 \item{rf}{A forest object of s3 class 'ranger'. Note: rf requires
 write.forest = TRUE and keep.inbag = TRUE.}
 
-\item{x_test}{An (optional) test dataset (dataframe or matrix)}
-
 \item{type}{The type of proximities to be obtained.
 Options are rfgap (default), original, oob, pbk, or rfproxih.}
+
+\item{x_test}{An (optional) test dataset (dataframe or matrix)}
+
+\item{prox}{a precomputed random forest proximity matrix}
+
+\item{n_samples}{How many samples should be generated?}
+
+\item{class_weights}{how the number of samples should be weighted. Currently,
+only 'uniform' is supported}
 
 \item{...}{Additional argument options for ranger(). (If rf is not supplied).}
 }
@@ -35,6 +46,7 @@ A matrix of proximity values.
 }
 \description{
 This function generates random forest proximities of a variety of types.
+THIS FUNCTION IS NOT CURRENLY IMPLEMENTED
 }
 \examples{
 
