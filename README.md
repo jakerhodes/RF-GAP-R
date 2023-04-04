@@ -35,10 +35,10 @@ same preprocessing steps as may be needed for other ML processes. This
 simplifies the use of random forests and thus, for our purposes, the
 generation of random forest proximities.
 
-Let be a dataframe or matrix object with labels . Here must be numeric
-(for a regression forest) or a factor type (for a classification task).
-If is a character vector it will be coerced to be a factor type. To
-generate the proximities, we use the function. The user may use a
+Let `x` be a dataframe or matrix object with labels . Here must be
+numeric (for a regression forest) or a factor type (for a classification
+task). If is a character vector it will be coerced to be a factor type.
+To generate the proximities, we use the function. The user may use a
 pre-trained random forest to construct the proximities, which has the
 benefit of a direct comparison of proximity types, or to train when
 calling .
@@ -100,10 +100,10 @@ y <- iris[, 5]
 mds <- rf_mds(x, y, type = 'rfgap')
 ```
 
-    ## initial  value 15.556569 
-    ## iter   5 value 8.146386
-    ## iter  10 value 7.621126
-    ## final  value 7.607682 
+    ## initial  value 15.627660 
+    ## iter   5 value 8.044636
+    ## iter  10 value 7.460847
+    ## final  value 7.437726 
     ## converged
 
 ``` r
@@ -130,10 +130,10 @@ outlier_scores <- rf_outliers(x, y, type = 'rfgap')
 plot(outlier_scores, x, y)
 ```
 
-    ## initial  value 15.289750 
-    ## iter   5 value 12.740107
-    ## iter  10 value 11.977478
-    ## final  value 11.872832 
+    ## initial  value 15.971007 
+    ## iter   5 value 13.023555
+    ## iter  10 value 12.153606
+    ## final  value 12.079668 
     ## converged
 
 ![](README_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
