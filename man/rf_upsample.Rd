@@ -2,8 +2,7 @@
 % Please edit documentation in R/rf_upsample.R
 \name{rf_upsample}
 \alias{rf_upsample}
-\title{This function generates random forest proximities of a variety of types.
-THIS FUNCTION IS NOT CURRENLY IMPLEMENTED}
+\title{THIS FUNCTION IS NOT CURRENLY IMPLEMENTED}
 \usage{
 rf_upsample(
   x,
@@ -45,7 +44,6 @@ only 'uniform' is supported}
 A matrix of proximity values.
 }
 \description{
-This function generates random forest proximities of a variety of types.
 THIS FUNCTION IS NOT CURRENLY IMPLEMENTED
 }
 \examples{
