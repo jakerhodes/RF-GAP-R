@@ -57,7 +57,7 @@ prox <- get_proximities(x, y)
 
 This is the simplest way to generate proximities. Here we simply call
 `get_proximities` using the dataframe `x` and labels `y` as inputs. By
-default, RF-GAP proximities are constructed. The argument allows the
+default, RF-GAP proximities are constructed. The argument $ allows the
 user to select the type of proximities to be constructed, the package
 currently supports `"original"`, `"oob"`, and `"rfgap"`.
 
@@ -89,13 +89,28 @@ without the need of retraining a forest each time.
 `get_proximities` has the additional option for the user to supply a
 test set. Including the test set will extend the proximities to the test
 observations. This is done by using the argument `x_test`. The returned
-proximity matrix will have *n*\_*t**r**a**i**n* + *n*\_*t**e**s**t* rows
-and columns. The returned proximity matrix is an S3 object of type
-`rf_proximities`. This object type has additional methods associated
-with it for making predictions, producing visualizations, detecting
-outliers, and imputing missing data.
+proximity matrix will have `n_train + n_test` rows and columns. The
+returned proximity matrix is an S3 object of type `rf_proximities`. This
+object type has additional methods associated with it for making
+predictions, producing visualizations, detecting outliers, and imputing
+missing data.
 
 ## Create 2-dimensional MDS embedding using RF-GAP proximities and plot
+
+We apply these random forest distances,
+$d(x\_i, x\_j) = \\sqrt{1 - prox(x\_i, x\_j)}$ to multidimensional
+scaling using the function `rf_mds`. To use this function, the user may
+choose to supply a precomputed proximity matrix, a trained `ranger`
+object, or just the dataframe `x` with labels `y` (`x` is required). If
+a proximity matrix is not supplied, the user may choose the proximity
+type (default is RF-GAP). Two types of MDS may be run; metric MDS using
+the `cmdscale` function from the `stats` package, and non-metric MDS
+using the `isoMDS` function from the `MASS` packages. The number of
+dimensions can be selected using the `n_dim` argument (default is 2).
+The generic `plot` function may be used to generate a scatterplot of the
+MDS embeddings based on the `ggplot2`. If the labels, `y`, are supplied,
+the points will be colored and shaped according to class if `y` is of
+factor type, or just colored according to scale if `y` is numeric.
 
 ``` r
 x <- iris[, 1:4]
@@ -103,10 +118,10 @@ y <- iris[, 5]
 mds <- rf_mds(x, y, type = 'rfgap')
 ```
 
-    ## initial  value 15.745637 
-    ## iter   5 value 8.025056
-    ## iter  10 value 7.412936
-    ## final  value 7.391466 
+    ## initial  value 16.166341 
+    ## iter   5 value 8.326390
+    ## iter  10 value 7.802122
+    ## final  value 7.788886 
     ## converged
 
 ``` r
@@ -115,7 +130,22 @@ plot(mds, y)
 
 ![](README_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
 
+We also provide the means of imputing missing data and detecting
+outliers.
+
 ## Impute missing data
+
+The `rfgap` package provides a simple function to run random forest
+imputation. It is assumed that the missing data takes the form `NA`. The
+function `rf_impute` requires the dataset with missing values, `x`,
+vector of associated labels, `y`, the proximity `type` (default is
+`rfgap`), number of iterations to run the imputation (`n_iters`, default
+1), and any additional `ranger` options (`...`). The function returns a
+dataframe with the imputed values. An additional argument, `x_true`, may
+be used to supply the true data without missing values. This is used for
+testing the quality of the imputation. If the user supplies `x_true`,
+then function returns a list with two elements, the imputed dataframe
+and the mean-squared error between the true and imputed values.
 
 ``` r
 x <- airquality[, -4]
@@ -125,6 +155,14 @@ imputed_data <- rf_impute(x, y, type = 'rfgap')
 
 ## Run Outlier Detection
 
+To compute the outlier scores, we use the function `rf_outliers` which
+takes the a dataframe or `rf_proximities` object, `x`, labels `y`, and
+proximity type as arguments. The proximity type is ignored if an
+`rf_proximities` object is supplied. Additionally, the user may provide
+a pretrained `ranger` if `x` is the data matrix, rather than a proximity
+matrix. `rf_outliers` returns an object of S3 type `rf_outlier` which is
+an array of the length of the number of objects in the dataset `x`.
+
 ``` r
 x <- mtcars[, -c(1, 2)]
 y <- as.factor(mtcars[, 2])
@@ -133,15 +171,11 @@ outlier_scores <- rf_outliers(x, y, type = 'rfgap')
 plot(outlier_scores, x, y)
 ```
 
-    ## initial  value 16.070821 
-    ## iter   5 value 13.696307
-    ## iter  10 value 12.854251
-    ## iter  15 value 12.627912
-    ## iter  20 value 12.416608
-    ## iter  25 value 12.053992
-    ## iter  30 value 11.887516
-    ## iter  30 value 11.880672
-    ## final  value 11.857306 
+    ## initial  value 15.006378 
+    ## iter   5 value 12.793263
+    ## iter  10 value 11.753692
+    ## iter  15 value 11.369301
+    ## final  value 11.234473 
     ## converged
 
 ![](README_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
