@@ -13,8 +13,8 @@ provided.
 
 ## Random Forest Geometry- and Accuracy-Preserving proximities
 
-This is the official repository for the paper “Random Forest- Geometry-
-and Accuracy-Preserving Proximities”
+This is the official R code repository for the paper “Random Forest-
+Geometry- and Accuracy-Preserving Proximities”
 (<https://arxiv.org/abs/2201.12682>). In the paper we show that random
 forest (RF) predictions can be exactly determined by using RF-GAP
 proximities as weights in a weighted-sum regressor or weighted-majority
@@ -118,10 +118,9 @@ y <- iris[, 5]
 mds <- rf_mds(x, y, type = 'rfgap')
 ```
 
-    ## initial  value 16.166341 
-    ## iter   5 value 8.326390
-    ## iter  10 value 7.802122
-    ## final  value 7.788886 
+    ## initial  value 16.367552 
+    ## iter   5 value 8.367811
+    ## final  value 7.805561 
     ## converged
 
 ``` r
@@ -171,11 +170,14 @@ outlier_scores <- rf_outliers(x, y, type = 'rfgap')
 plot(outlier_scores, x, y)
 ```
 
-    ## initial  value 15.006378 
-    ## iter   5 value 12.793263
-    ## iter  10 value 11.753692
-    ## iter  15 value 11.369301
-    ## final  value 11.234473 
+    ## initial  value 15.400537 
+    ## iter   5 value 12.825719
+    ## iter  10 value 11.957599
+    ## iter  15 value 11.618396
+    ## iter  20 value 11.458105
+    ## iter  20 value 11.450317
+    ## iter  20 value 11.447118
+    ## final  value 11.447118 
     ## converged
 
 ![](README_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
