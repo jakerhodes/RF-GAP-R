@@ -35,13 +35,14 @@ same preprocessing steps as may be needed for other ML processes. This
 simplifies the use of random forests and thus, for our purposes, the
 generation of random forest proximities.
 
-Let `x` be a dataframe or matrix object with labels . Here must be
-numeric (for a regression forest) or a factor type (for a classification
-task). If is a character vector it will be coerced to be a factor type.
-To generate the proximities, we use the function. The user may use a
-pre-trained random forest to construct the proximities, which has the
-benefit of a direct comparison of proximity types, or to train when
-calling .
+Let `x` be a dataframe or matrix object with labels `y`. Here `y` must
+be numeric (for a regression forest) or a factor type (for a
+classification task). If `y` is a character vector it will be coerced to
+be a factor type. To generate the proximities, we use the
+`get_proximities` function. The user may use a pre-trained random forest
+to construct the proximities, which has the benefit of a direct
+comparison of proximity types, or to train when calling
+`get_proximities`.
 
 ``` r
 library(rfgap)
@@ -55,14 +56,16 @@ prox <- get_proximities(x, y)
 ```
 
 This is the simplest way to generate proximities. Here we simply call
-using the dataframe and labels as inputs. By default, RF-GAP proximities
-are constructed. The argument allows the user to select the type of
-proximities to be constructed, the package currently supports , , and .
+`get_proximities` using the dataframe `x` and labels `y` as inputs. By
+default, RF-GAP proximities are constructed. The argument allows the
+user to select the type of proximities to be constructed, the package
+currently supports `"original"`, `"oob"`, and `"rfgap"`.
 
-The user may train a random forest prior to calling . In this case, the
-user must train the forest with the options and set to . Using a
-pre-trained forest allows the user to fairly compare different proximity
-types without the need of retraining a forest each time.
+The user may train a random forest prior to calling `get_proximities`.
+In this case, the user must train the `ranger` forest with the options
+`keep.inbag` and `write.forest` set to `TRUE`. Using a pre-trained
+forest allows the user to fairly compare different proximity types
+without the need of retraining a forest each time.
 
     library(rfgap)
 
@@ -83,14 +86,14 @@ types without the need of retraining a forest each time.
     proximities_orig  <- get_proximities(x, rf = rf, 
                                          type = 'original')
 
-has the additional option for the user to supply a test set. Including
-the test set will extend the proximities to the test observations. This
-is done by using the argument , as demonstrated below in . The returned
+`get_proximities` has the additional option for the user to supply a
+test set. Including the test set will extend the proximities to the test
+observations. This is done by using the argument `x_test`. The returned
 proximity matrix will have *n*\_*t**r**a**i**n* + *n*\_*t**e**s**t* rows
-and columns. The returned proximity matrix is an S3 object of type .
-This object type has additional methods associated with it for making
-predictions, producing visualizations, detecting outliers, and imputing
-missing data.
+and columns. The returned proximity matrix is an S3 object of type
+`rf_proximities`. This object type has additional methods associated
+with it for making predictions, producing visualizations, detecting
+outliers, and imputing missing data.
 
 ## Create 2-dimensional MDS embedding using RF-GAP proximities and plot
 
@@ -100,10 +103,10 @@ y <- iris[, 5]
 mds <- rf_mds(x, y, type = 'rfgap')
 ```
 
-    ## initial  value 15.627660 
-    ## iter   5 value 8.044636
-    ## iter  10 value 7.460847
-    ## final  value 7.437726 
+    ## initial  value 16.292495 
+    ## iter   5 value 8.497290
+    ## iter  10 value 7.959656
+    ## final  value 7.945167 
     ## converged
 
 ``` r
@@ -130,10 +133,15 @@ outlier_scores <- rf_outliers(x, y, type = 'rfgap')
 plot(outlier_scores, x, y)
 ```
 
-    ## initial  value 15.971007 
-    ## iter   5 value 13.023555
-    ## iter  10 value 12.153606
-    ## final  value 12.079668 
+    ## initial  value 16.291417 
+    ## iter   5 value 13.131588
+    ## iter  10 value 12.117763
+    ## iter  15 value 11.540716
+    ## iter  20 value 11.305680
+    ## iter  25 value 11.219902
+    ## iter  25 value 11.210208
+    ## iter  25 value 11.199484
+    ## final  value 11.199484 
     ## converged
 
 ![](README_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->

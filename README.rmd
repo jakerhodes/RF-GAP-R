@@ -25,7 +25,7 @@ This is the official repository for the paper "Random Forest- Geometry- and Accu
 
 Random forests are capable of making predictions on both continuous and categorical response variables for regression and classification, respectively. Additionally, random forests handle mixed feature variables, that is, predictor variables may be either numeric or categorical and since the partitioning decisions are rank-based, numerical predictor variables do not need to be normalized or standardized as is typical in other machine learning contexts. Thus, the construction of random forest-based proximities does not require the same preprocessing steps as may be needed for other ML processes. This simplifies the use of random forests and thus, for our purposes, the generation of random forest proximities.  
 
-Let $\texttt{x}$ be a dataframe or matrix object with labels \texttt{y}. Here \texttt{y} must be numeric (for a regression forest) or a factor type (for a classification task). If \texttt{y} is a character vector it will be coerced to be a factor type. To generate the proximities, we use the \texttt{get\_proximities} function. The user may use a pre-trained random forest to construct the proximities, which has the benefit of a direct comparison of proximity types, or to train when calling \texttt{get\_proximities}.
+Let $\texttt{x}$ be a dataframe or matrix object with labels $\texttt{y}$. Here $\texttt{y}$ must be numeric (for a regression forest) or a factor type (for a classification task). If $\texttt{y}$ is a character vector it will be coerced to be a factor type. To generate the proximities, we use the $\texttt{get\_proximities}$ function. The user may use a pre-trained random forest to construct the proximities, which has the benefit of a direct comparison of proximity types, or to train when calling $\texttt{get\_proximities}$.
 
 
 ```{r rfgap}
@@ -39,9 +39,9 @@ y <- iris[, 5]
 prox <- get_proximities(x, y)
 ```
 
-This is the simplest way to generate proximities.  Here we simply call \texttt{get\_proximities} using the dataframe \texttt{x} and labels \texttt{y} as inputs. By default, RF-GAP proximities are constructed. The argument \texttt{type} allows the user to select the type of proximities to be constructed, the package currently supports \texttt{"original"}, \texttt{"oob"}, and \texttt{"rfgap"}.
+This is the simplest way to generate proximities.  Here we simply call $\texttt{get\_proximities}$ using the dataframe $\texttt{x}$ and labels $\texttt{y}$ as inputs. By default, RF-GAP proximities are constructed. The argument \texttt{type} allows the user to select the type of proximities to be constructed, the package currently supports $\texttt{"original"}$, $\texttt{"oob"}$, and $\texttt{"rfgap"}$.
 
-The user may train a random forest prior to calling \texttt{get\_proximities}. In this case, the user must train the \texttt{ranger} forest with the options \texttt{keep.inbag} and \texttt{write.forest} set to \texttt{TRUE}. Using a pre-trained forest allows the user to fairly compare different proximity types without the need of retraining a forest each time.
+The user may train a random forest prior to calling $\texttt{get\_proximities}$. In this case, the user must train the $\texttt{ranger}$ forest with the options $\texttt{keep.inbag}$ and $\texttt{write.forest}$ set to $\texttt{TRUE}$. Using a pre-trained forest allows the user to fairly compare different proximity types without the need of retraining a forest each time.
 
 ```
 library(rfgap)
@@ -64,7 +64,7 @@ proximities_orig  <- get_proximities(x, rf = rf,
                                      type = 'original')
 ```
 
-\texttt{get\_proximities} has the additional option for the user to supply a test set. Including the test set will extend the proximities to the test observations.  This is done by using the argument \texttt{x\_test}, as demonstrated below in \ref{lst:x_test}. The returned proximity matrix will have $n\_train + n\_test$ rows and columns. The returned proximity matrix is an S3 object of type \texttt{rf\_proximities}. This object type has additional methods associated with it for making predictions, producing visualizations, detecting outliers, and imputing missing data.
+$\texttt{get\_proximities}$ has the additional option for the user to supply a test set. Including the test set will extend the proximities to the test observations.  This is done by using the argument $\texttt{x\_test}$. The returned proximity matrix will have $n\_train + n\_test$ rows and columns. The returned proximity matrix is an S3 object of type $\texttt{rf\_proximities}$. This object type has additional methods associated with it for making predictions, producing visualizations, detecting outliers, and imputing missing data.
 
 ## Create 2-dimensional MDS embedding using RF-GAP proximities and plot
 
