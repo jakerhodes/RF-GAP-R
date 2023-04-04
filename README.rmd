@@ -64,7 +64,7 @@ proximities_orig  <- get_proximities(x, rf = rf,
                                      type = 'original')
 ```
 
-$\texttt{get\_proximities}$ has the additional option for the user to supply a test set. Including the test set will extend the proximities to the test observations.  This is done by using the argument $\texttt{x\_test}$. The returned proximity matrix will have $n\_train + n\_test$ rows and columns. The returned proximity matrix is an S3 object of type $\texttt{rf\_proximities}$. This object type has additional methods associated with it for making predictions, producing visualizations, detecting outliers, and imputing missing data.
+$\texttt{get\_proximities}$ has the additional option for the user to supply a test set. Including the test set will extend the proximities to the test observations.  This is done by using the argument $\texttt{x\_test}$. The returned proximity matrix will have ${n\_train + n\_test}$ rows and columns. The returned proximity matrix is an S3 object of type $\texttt{rf\_proximities}$. This object type has additional methods associated with it for making predictions, producing visualizations, detecting outliers, and imputing missing data.
 
 ## Create 2-dimensional MDS embedding using RF-GAP proximities and plot
 
