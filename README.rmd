@@ -36,7 +36,7 @@ y <- iris[, 5]
 prox <- get_proximities(x, y)
 ```
 
-This is the simplest way to generate proximities.  Here we simply call $get\\_proximities$ using the dataframe $x$ and labels $y$ as inputs. By default, RF-GAP proximities are constructed. The argument $type allows the user to select the type of proximities to be constructed, the package currently supports $"original"$, $"oob"$, and $"rfgap"$.
+This is the simplest way to generate proximities.  Here we simply call $get\\_proximities$ using the dataframe $x$ and labels $y$ as inputs. By default, RF-GAP proximities are constructed. The argument $type allows the user to select the type of proximities to be constructed, the package currently supports "original", "oob", and "rfgap".
 
 The user may train a random forest prior to calling $get\\_proximities$. In this case, the user must train the $ranger$ forest with the options $keep.inbag$ and $write.forest$ set to $TRUE$. Using a pre-trained forest allows the user to fairly compare different proximity types without the need of retraining a forest each time.
 

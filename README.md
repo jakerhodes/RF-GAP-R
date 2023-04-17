@@ -55,7 +55,7 @@ This is the simplest way to generate proximities. Here we simply call
 $get\\_proximities$ using the dataframe $x$ and labels $y$ as inputs. By
 default, RF-GAP proximities are constructed. The argument \$type allows
 the user to select the type of proximities to be constructed, the
-package currently supports $"original"$, $"oob"$, and $"rfgap"$.
+package currently supports “original”, “oob”, and “rfgap”.
 
 The user may train a random forest prior to calling $get\\_proximities$.
 In this case, the user must train the $ranger$ forest with the options
@@ -114,10 +114,12 @@ y <- iris[, 5]
 mds <- rf_mds(x, y, type = 'rfgap')
 ```
 
-    ## initial  value 15.618800 
-    ## iter   5 value 8.037729
-    ## iter  10 value 7.394078
-    ## final  value 7.383099 
+    ## initial  value 15.846995 
+    ## iter   5 value 8.205289
+    ## iter  10 value 7.666297
+    ## iter  10 value 7.659181
+    ## iter  10 value 7.655631
+    ## final  value 7.655631 
     ## converged
 
 ``` r
@@ -169,14 +171,14 @@ outlier_scores <- rf_outliers(x, y, type = 'rfgap')
 plot(outlier_scores, x, y)
 ```
 
-    ## initial  value 15.897897 
-    ## iter   5 value 13.282850
-    ## iter  10 value 12.127251
-    ## iter  15 value 11.803435
-    ## iter  20 value 11.702359
-    ## iter  20 value 11.697023
-    ## iter  20 value 11.692347
-    ## final  value 11.692347 
+    ## initial  value 15.275270 
+    ## iter   5 value 13.239952
+    ## iter  10 value 12.463053
+    ## iter  15 value 12.186891
+    ## iter  20 value 11.967894
+    ## iter  20 value 11.956338
+    ## iter  20 value 11.949145
+    ## final  value 11.949145 
     ## converged
 
 ![](README_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
