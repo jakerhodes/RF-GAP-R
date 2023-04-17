@@ -35,14 +35,13 @@ same preprocessing steps as may be needed for other ML processes. This
 simplifies the use of random forests and thus, for our purposes, the
 generation of random forest proximities.
 
-Let $\texttt{x}$ be a dataframe or matrix object with labels
-$\texttt{y}$. Here $\texttt{y}$ must be numeric (for a regression
-forest) or a factor type (for a classification task). If $\texttt{y}$ is
-a character vector it will be coerced to be a factor type. To generate
-the proximities, we use the $\texttt{get\_proximities}$ function. The
-user may use a pre-trained random forest to construct the proximities,
-which has the benefit of a direct comparison of proximity types, or to
-train when calling $\texttt{get\_proximities}$.
+Let be a dataframe or matrix object with labels . Here must be numeric
+(for a regression forest) or a factor type (for a classification task).
+If is a character vector it will be coerced to be a factor type. To
+generate the proximities, we use the function. The user may use a
+pre-trained random forest to construct the proximities, which has the
+benefit of a direct comparison of proximity types, or to train when
+calling .
 
 ``` r
 library(rfgap)
@@ -123,10 +122,10 @@ y <- iris[, 5]
 mds <- rf_mds(x, y, type = 'rfgap')
 ```
 
-    ## initial  value 15.755589 
-    ## iter   5 value 8.077728
-    ## iter  10 value 7.492868
-    ## final  value 7.464818 
+    ## initial  value 15.748186 
+    ## iter   5 value 8.440431
+    ## iter  10 value 7.900063
+    ## final  value 7.873705 
     ## converged
 
 ``` r
@@ -180,14 +179,15 @@ outlier_scores <- rf_outliers(x, y, type = 'rfgap')
 plot(outlier_scores, x, y)
 ```
 
-    ## initial  value 15.698259 
-    ## iter   5 value 12.921668
-    ## iter  10 value 12.023197
-    ## iter  15 value 11.886955
-    ## iter  20 value 11.742787
-    ## iter  25 value 11.548419
-    ## iter  30 value 11.345648
-    ## final  value 11.299626 
+    ## initial  value 14.891489 
+    ## iter   5 value 12.484513
+    ## iter  10 value 11.779136
+    ## iter  15 value 11.641927
+    ## iter  20 value 11.465007
+    ## iter  25 value 11.285936
+    ## iter  25 value 11.282485
+    ## iter  25 value 11.279011
+    ## final  value 11.279011 
     ## converged
 
 ![](README_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
