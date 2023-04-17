@@ -39,7 +39,7 @@ Let $\texttt{x}$ be a dataframe or matrix object with labels
 $\texttt{y}$. Here $\texttt{y}$ must be numeric (for a regression
 forest) or a factor type (for a classification task). If $\texttt{y}$ is
 a character vector it will be coerced to be a factor type. To generate
-the proximities, we use the $\texttt{get\_proximities}$ function. The
+the proximities, we use the $\texttt{get_proximities}$ function. The
 user may use a pre-trained random forest to construct the proximities,
 which has the benefit of a direct comparison of proximity types, or to
 train when calling $\texttt{get\_proximities}$.
@@ -123,10 +123,12 @@ y <- iris[, 5]
 mds <- rf_mds(x, y, type = 'rfgap')
 ```
 
-    ## initial  value 15.423621 
-    ## iter   5 value 7.945848
-    ## iter  10 value 7.465886
-    ## final  value 7.445110 
+    ## initial  value 15.957875 
+    ## iter   5 value 8.162987
+    ## iter  10 value 7.655650
+    ## iter  10 value 7.649884
+    ## iter  10 value 7.646786
+    ## final  value 7.646786 
     ## converged
 
 ``` r
@@ -180,11 +182,11 @@ outlier_scores <- rf_outliers(x, y, type = 'rfgap')
 plot(outlier_scores, x, y)
 ```
 
-    ## initial  value 15.913989 
-    ## iter   5 value 13.211663
-    ## iter  10 value 12.074498
-    ## iter  15 value 11.860742
-    ## final  value 11.788542 
+    ## initial  value 15.764874 
+    ## iter   5 value 13.041868
+    ## iter  10 value 12.079376
+    ## iter  15 value 11.775248
+    ## final  value 11.696279 
     ## converged
 
 ![](README_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
