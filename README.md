@@ -94,7 +94,7 @@ outliers, and imputing missing data.
 ## Create 2-dimensional MDS embedding using RF-GAP proximities and plot
 
 We apply these random forest distances,
-$d(x_i, x_j) = \sqrt{1 - prox(x_i, x_j)$ to multidimensional scaling
+$d(x_i, x_j) = \sqrt{1 - prox(x_i, x_j)}$ to multidimensional scaling
 using the function $rf\\_mds$. To use this function, the user may choose
 to supply a precomputed proximity matrix, a trained $ranger$ object, or
 just the dataframe $x$ with labels $y$ ($x$ is required). If a proximity
@@ -114,12 +114,10 @@ y <- iris[, 5]
 mds <- rf_mds(x, y, type = 'rfgap')
 ```
 
-    ## initial  value 15.417980 
-    ## iter   5 value 8.129482
-    ## iter  10 value 7.493931
-    ## iter  10 value 7.488092
-    ## iter  10 value 7.488092
-    ## final  value 7.488092 
+    ## initial  value 15.618800 
+    ## iter   5 value 8.037729
+    ## iter  10 value 7.394078
+    ## final  value 7.383099 
     ## converged
 
 ``` r
@@ -171,12 +169,14 @@ outlier_scores <- rf_outliers(x, y, type = 'rfgap')
 plot(outlier_scores, x, y)
 ```
 
-    ## initial  value 15.394160 
-    ## iter   5 value 11.832323
-    ## iter  10 value 10.978208
-    ## iter  15 value 10.833176
-    ## iter  15 value 10.828000
-    ## final  value 10.782805 
+    ## initial  value 15.897897 
+    ## iter   5 value 13.282850
+    ## iter  10 value 12.127251
+    ## iter  15 value 11.803435
+    ## iter  20 value 11.702359
+    ## iter  20 value 11.697023
+    ## iter  20 value 11.692347
+    ## final  value 11.692347 
     ## converged
 
 ![](README_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
