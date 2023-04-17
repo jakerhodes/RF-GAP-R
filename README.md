@@ -7,19 +7,15 @@ Jake S. Rhodes
 
 ## Update:
 
-\###Random Forest Geometry- and Accuracy-Preserving proximities was
-accepted for publication on March 26, 2023. An updated link will soon be
-provided.
-
 ## Random Forest Geometry- and Accuracy-Preserving proximities
 
 This is the official R code repository for the paper “Random Forest-
 Geometry- and Accuracy-Preserving Proximities”
-(<https://arxiv.org/abs/2201.12682>). In the paper we show that random
-forest (RF) predictions can be exactly determined by using RF-GAP
-proximities as weights in a weighted-sum regressor or weighted-majority
-vote classifier. This repo provides the base code to generate the
-various proximity definitions described in the paper.
+(<https://ieeexplore.ieee.org/document/10089875>). In the paper we show
+that random forest (RF) predictions can be exactly determined by using
+RF-GAP proximities as weights in a weighted-sum regressor or
+weighted-majority vote classifier. This repo provides the base code to
+generate the various proximity definitions described in the paper.
 
 ## Generate RF-GAP proximities:
 
@@ -122,10 +118,12 @@ y <- iris[, 5]
 mds <- rf_mds(x, y, type = 'rfgap')
 ```
 
-    ## initial  value 15.748186 
-    ## iter   5 value 8.440431
-    ## iter  10 value 7.900063
-    ## final  value 7.873705 
+    ## initial  value 16.001404 
+    ## iter   5 value 8.170306
+    ## iter  10 value 7.717371
+    ## iter  10 value 7.710932
+    ## iter  10 value 7.708673
+    ## final  value 7.708673 
     ## converged
 
 ``` r
@@ -179,15 +177,11 @@ outlier_scores <- rf_outliers(x, y, type = 'rfgap')
 plot(outlier_scores, x, y)
 ```
 
-    ## initial  value 14.891489 
-    ## iter   5 value 12.484513
-    ## iter  10 value 11.779136
-    ## iter  15 value 11.641927
-    ## iter  20 value 11.465007
-    ## iter  25 value 11.285936
-    ## iter  25 value 11.282485
-    ## iter  25 value 11.279011
-    ## final  value 11.279011 
+    ## initial  value 16.244852 
+    ## iter   5 value 13.174290
+    ## iter  10 value 11.956024
+    ## iter  15 value 11.783160
+    ## final  value 11.680537 
     ## converged
 
 ![](README_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
