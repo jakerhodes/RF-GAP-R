@@ -5,8 +5,6 @@ Jake S. Rhodes
 
 # RF-GAP
 
-## Update:
-
 ## Random Forest Geometry- and Accuracy-Preserving proximities
 
 This is the official R code repository for the paper “Random Forest-
@@ -24,44 +22,8 @@ following code:
 
 ``` r
 library(devtools)
-```
-
-    ## Warning: package 'devtools' was built under R version 4.2.2
-
-    ## Loading required package: usethis
-
-``` r
 install_github('jakerhodes/RF-GAP-R')
 ```
-
-    ## Downloading GitHub repo jakerhodes/RF-GAP-R@HEAD
-
-    ## cli   (3.6.0 -> 3.6.1) [CRAN]
-    ## vctrs (0.5.2 -> 0.6.1) [CRAN]
-
-    ## Installing 2 packages: cli, vctrs
-
-    ## Installing packages into 'C:/Users/Jake Rhodes/AppData/Local/Temp/RtmpspNtkZ/temp_libpath7781f592641'
-    ## (as 'lib' is unspecified)
-
-    ## package 'cli' successfully unpacked and MD5 sums checked
-    ## package 'vctrs' successfully unpacked and MD5 sums checked
-    ## 
-    ## The downloaded binary packages are in
-    ##  C:\Users\Jake Rhodes\AppData\Local\Temp\RtmporKRuU\downloaded_packages
-    ## ── R CMD build ─────────────────────────────────────────────────────────────────
-    ##          checking for file 'C:\Users\Jake Rhodes\AppData\Local\Temp\RtmporKRuU\remotes58e4706d6500\jakerhodes-RF-GAP-R-8b7980b/DESCRIPTION' ...  ✔  checking for file 'C:\Users\Jake Rhodes\AppData\Local\Temp\RtmporKRuU\remotes58e4706d6500\jakerhodes-RF-GAP-R-8b7980b/DESCRIPTION'
-    ##       ─  preparing 'rfgap':
-    ##    checking DESCRIPTION meta-information ...     checking DESCRIPTION meta-information ...   ✔  checking DESCRIPTION meta-information
-    ##       ─  checking for LF line-endings in source and make files and shell scripts
-    ##   ─  checking for empty or unneeded directories
-    ##      Omitted 'LazyData' from DESCRIPTION
-    ##       ─  building 'rfgap_0.1.0.tar.gz'
-    ##      
-    ## 
-
-    ## Installing package into 'C:/Users/Jake Rhodes/AppData/Local/Temp/RtmpspNtkZ/temp_libpath7781f592641'
-    ## (as 'lib' is unspecified)
 
 ## Generate RF-GAP proximities:
 
@@ -160,10 +122,10 @@ y <- iris[, 5]
 mds <- rf_mds(x, y, type = 'rfgap')
 ```
 
-    ## initial  value 15.761633 
-    ## iter   5 value 8.345852
-    ## iter  10 value 7.867023
-    ## final  value 7.852629 
+    ## initial  value 15.535851 
+    ## iter   5 value 8.447411
+    ## iter  10 value 7.959971
+    ## final  value 7.942943 
     ## converged
 
 ``` r
@@ -215,8 +177,11 @@ outlier_scores <- rf_outliers(x, y, type = 'rfgap')
 plot(outlier_scores, x, y)
 ```
 
-    ## initial  value 15.895526 
-    ## final  value 15.888904 
+    ## initial  value 15.563680 
+    ## iter   5 value 12.657277
+    ## iter  10 value 11.689262
+    ## iter  15 value 11.578856
+    ## final  value 11.554637 
     ## converged
 
 ![](README_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
