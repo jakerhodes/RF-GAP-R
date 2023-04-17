@@ -123,10 +123,10 @@ y <- iris[, 5]
 mds <- rf_mds(x, y, type = 'rfgap')
 ```
 
-    ## initial  value 15.975337 
-    ## iter   5 value 8.213714
-    ## iter  10 value 7.569822
-    ## final  value 7.545775 
+    ## initial  value 15.755589 
+    ## iter   5 value 8.077728
+    ## iter  10 value 7.492868
+    ## final  value 7.464818 
     ## converged
 
 ``` r
@@ -180,14 +180,14 @@ outlier_scores <- rf_outliers(x, y, type = 'rfgap')
 plot(outlier_scores, x, y)
 ```
 
-    ## initial  value 15.736107 
-    ## iter   5 value 12.357233
-    ## iter  10 value 11.267073
-    ## iter  15 value 11.157971
-    ## iter  20 value 11.092737
-    ## iter  20 value 11.081737
-    ## iter  20 value 11.078569
-    ## final  value 11.078569 
+    ## initial  value 15.698259 
+    ## iter   5 value 12.921668
+    ## iter  10 value 12.023197
+    ## iter  15 value 11.886955
+    ## iter  20 value 11.742787
+    ## iter  25 value 11.548419
+    ## iter  30 value 11.345648
+    ## final  value 11.299626 
     ## converged
 
 ![](README_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
