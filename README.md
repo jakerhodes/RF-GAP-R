@@ -1,7 +1,7 @@
 README.rmd
 ================
 Jake S. Rhodes
-4/4/2023
+4/17/2023
 
 # RF-GAP
 
@@ -39,7 +39,7 @@ Let $\texttt{x}$ be a dataframe or matrix object with labels
 $\texttt{y}$. Here $\texttt{y}$ must be numeric (for a regression
 forest) or a factor type (for a classification task). If $\texttt{y}$ is
 a character vector it will be coerced to be a factor type. To generate
-the proximities, we use the $\texttt{get_proximities}$ function. The
+the proximities, we use the $\texttt{get\_proximities}$ function. The
 user may use a pre-trained random forest to construct the proximities,
 which has the benefit of a direct comparison of proximity types, or to
 train when calling $\texttt{get\_proximities}$.
@@ -123,12 +123,10 @@ y <- iris[, 5]
 mds <- rf_mds(x, y, type = 'rfgap')
 ```
 
-    ## initial  value 15.957875 
-    ## iter   5 value 8.162987
-    ## iter  10 value 7.655650
-    ## iter  10 value 7.649884
-    ## iter  10 value 7.646786
-    ## final  value 7.646786 
+    ## initial  value 15.975337 
+    ## iter   5 value 8.213714
+    ## iter  10 value 7.569822
+    ## final  value 7.545775 
     ## converged
 
 ``` r
@@ -182,19 +180,26 @@ outlier_scores <- rf_outliers(x, y, type = 'rfgap')
 plot(outlier_scores, x, y)
 ```
 
-    ## initial  value 15.764874 
-    ## iter   5 value 13.041868
-    ## iter  10 value 12.079376
-    ## iter  15 value 11.775248
-    ## final  value 11.696279 
+    ## initial  value 15.736107 
+    ## iter   5 value 12.357233
+    ## iter  10 value 11.267073
+    ## iter  15 value 11.157971
+    ## iter  20 value 11.092737
+    ## iter  20 value 11.081737
+    ## iter  20 value 11.078569
+    ## final  value 11.078569 
     ## converged
 
 ![](README_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
 
-# Cite As
+# Cite As:
 
-@ARTICLE{10089875, author={Rhodes, Jake S. and Cutler, Adele and Moon,
-Kevin R.}, journal={IEEE Transactions on Pattern Analysis and Machine
-Intelligence}, title={Geometry- and Accuracy-Preserving Random Forest
-Proximities}, year={2023}, volume={}, number={}, pages={1-13},
-doi={10.1109/TPAMI.2023.3263774} }
+    @ARTICLE{10089875,
+      author={Rhodes, Jake S. and Cutler, Adele and Moon, Kevin R.},
+      journal={IEEE Transactions on Pattern Analysis and Machine Intelligence}, 
+      title={Geometry- and Accuracy-Preserving Random Forest Proximities}, 
+      year={2023},
+      volume={},
+      number={},
+      pages={1-13},
+      doi={10.1109/TPAMI.2023.3263774}}
