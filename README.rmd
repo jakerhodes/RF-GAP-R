@@ -104,3 +104,17 @@ outlier_scores <- rf_outliers(x, y, type = 'rfgap')
 
 plot(outlier_scores, x, y)
 ```
+
+# Cite As
+
+
+@ARTICLE{10089875,
+  author={Rhodes, Jake S. and Cutler, Adele and Moon, Kevin R.},
+  journal={IEEE Transactions on Pattern Analysis and Machine Intelligence}, 
+  title={Geometry- and Accuracy-Preserving Random Forest Proximities}, 
+  year={2023},
+  volume={},
+  number={},
+  pages={1-13},
+  doi={10.1109/TPAMI.2023.3263774}
+  }
