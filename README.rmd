@@ -18,7 +18,19 @@ knitr::opts_chunk$set(echo = TRUE)
 This is the official R code repository for the paper "Random Forest- Geometry- and Accuracy-Preserving Proximities" (https://ieeexplore.ieee.org/document/10089875). In the paper we show that random forest (RF) predictions can be exactly determined by using RF-GAP proximities as weights in a weighted-sum regressor or weighted-majority vote classifier.  This repo provides the base code to generate the various proximity definitions described in the paper.
 
 
+## Package Installation
+
+The devtools library is required for installation.  to install, run the following code:
+
+```{r}
+library(devtools)
+install_github('jakerhodes/RF-GAP-R')
+
+```
+
+
 ## Generate RF-GAP proximities:
+
 
 Random forests are capable of making predictions on both continuous and categorical response variables for regression and classification, respectively. Additionally, random forests handle mixed feature variables, that is, predictor variables may be either numeric or categorical and since the partitioning decisions are rank-based, numerical predictor variables do not need to be normalized or standardized as is typical in other machine learning contexts. Thus, the construction of random forest-based proximities does not require the same preprocessing steps as may be needed for other ML processes. This simplifies the use of random forests and thus, for our purposes, the generation of random forest proximities.  
 
