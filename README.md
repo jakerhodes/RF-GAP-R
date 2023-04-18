@@ -15,6 +15,8 @@ RF-GAP proximities as weights in a weighted-sum regressor or
 weighted-majority vote classifier. This repo provides the base code to
 generate the various proximity definitions described in the paper.
 
+A Python implementation can be found here: https://github.com/jakerhodes/RF-GAP-Python.
+
 ## Package Installation
 
 The devtools library is required for installation. to install, run the
