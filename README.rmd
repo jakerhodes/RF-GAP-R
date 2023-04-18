@@ -15,6 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 This is the official R code repository for the paper "Random Forest- Geometry- and Accuracy-Preserving Proximities" (https://ieeexplore.ieee.org/document/10089875). In the paper we show that random forest (RF) predictions can be exactly determined by using RF-GAP proximities as weights in a weighted-sum regressor or weighted-majority vote classifier.  This repo provides the base code to generate the various proximity definitions described in the paper.
 
+A Python implementation can be found here: https://github.com/jakerhodes/RF-GAP-Python.
 
 ## Package Installation
 
